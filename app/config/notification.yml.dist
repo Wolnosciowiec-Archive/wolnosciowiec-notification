@@ -1,0 +1,26 @@
+notification:
+    queue: "notificationbundle.queue.redis"
+    queue_parameters:
+        scheme: tcp
+        host: localhost
+        port: 6379
+
+    allowed_entities:
+        Message: "NotificationBundle\\Model\\Entity\\Message"
+
+    enabled_messengers:
+        "notificationbundle.messenger.twitter":
+            class: NotificationBundle\Messenger\TwitterMessenger
+            groups:
+                - short_content_update_notification
+
+    messengers:
+        twitter:
+            consumer_key: aaa
+            consumer_secret: bbb
+            access_token: ccc
+            access_token_secret: ddd
+
+        facebook:
+            app_id: xxx
+            app_secret: yyy

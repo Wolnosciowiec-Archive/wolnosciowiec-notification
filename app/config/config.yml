@@ -1,0 +1,52 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: notification.yml }
+
+parameters:
+    locale: en
+
+framework:
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    fragments:       ~
+    http_method_override: true
+    php_errors:
+        log: true
+
+doctrine:
+    dbal:
+        driver:   pdo_sqlite
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+
+jms_serializer:
+    handlers:
+        datetime:
+            default_format: "Y-m-d H:i:s"
+            default_timezone: "UTC"
+
+    visitors:
+        json:
+            options: JSON_PRETTY_PRINT
+
+    metadata:
+        debug: true
+        auto_detection: true
+        directories:
+            NotificationBundle:
+                namespace_prefix: NotificationBundle
+                path: "@NotificationBundle/Resources/config/Serializer"
