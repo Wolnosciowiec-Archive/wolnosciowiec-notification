@@ -1,0 +1,12 @@
+NotificationBundle\Model\Entity\Message:
+    exclusion_policy: ALL
+    properties:
+        content:
+            type: string
+            expose: true
+        id:
+            type: string
+            expose: true
+        groupName:
+            type: string
+            expose: true

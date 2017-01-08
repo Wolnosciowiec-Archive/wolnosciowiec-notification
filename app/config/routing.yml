@@ -1,0 +1,4 @@
+app:
+    resource: "@NotificationBundle/Controller/"
+    type:     rest
+    defaults: {_format: json}

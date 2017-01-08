@@ -1,0 +1,2 @@
+NotificationBundle\Model\Entity\Result\SenderResult:
+    exclusion_policy: None

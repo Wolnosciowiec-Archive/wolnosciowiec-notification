@@ -1,0 +1,52 @@
+services:
+    # Factories
+    notificationbundle.factory.messenger:
+        class: NotificationBundle\Factory\Messenger\MessengerFactory
+
+    notificationbundle.factory.queue:
+        class: NotificationBundle\Factory\Queue\QueueFactory
+
+    notificationbundle.factory.message:
+        class: NotificationBundle\Factory\Message\MessageFactory
+        arguments:
+            serializer: "@serializer"
+            logger:     "@logger"
+
+
+    # Queues
+    notificationbundle.queue.redis:
+        class: NotificationBundle\Queue\RedisQueue
+        arguments:
+            configurationProvider: "@notificationbundle.services.configuration.queue"
+
+
+    # Messengers
+    notificationbundle.messenger.twitter:
+        class: NotificationBundle\Messenger\TwitterMessenger
+        arguments:
+            configurationProvider: "@notificationbundle.services.configuration.messenger"
+
+    # Validators
+    notificationbundle.validator.message:
+        class: NotificationBundle\Controller\Validator\NewMessageValidator
+        arguments:
+            factory: "@notificationbundle.factory.message"
+
+    # Services
+    notificationbundle.services.sender:
+        class: NotificationBundle\Services\MessageSenderService
+        arguments:
+            factory: "@notificationbundle.factory.messenger"
+            logger: "@logger"
+            configuration: "@notificationbundle.services.configuration.messenger"
+
+    notificationbundle.services.configuration.messenger:
+        class: NotificationBundle\Services\ConfigurationProvider\MessengerConfigurationProvider
+
+    notificationbundle.services.configuration.queue:
+        class: NotificationBundle\Services\ConfigurationProvider\QueueConfigurationProvider
+
+    notificationbundle.services.cleaner.queue:
+        class: NotificationBundle\Services\QueueCleanerService
+        arguments:
+            factory: "@notificationbundle.factory.queue"
