@@ -25,6 +25,14 @@ abstract class AbstractConfigurationProvider
     }
 
     /**
+     * @return array
+     */
+    public function getAllConfiguration()
+    {
+        return $this->configuration;
+    }
+
+    /**
      * @param string $section
      * @return array
      */
