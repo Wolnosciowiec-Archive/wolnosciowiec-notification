@@ -12,7 +12,7 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 class MessengerConfigurationProvider extends AbstractConfigurationProvider
 {
     /**
-     * @var array $messegerGroupsByClass
+     * @var array $messengerGroupsByClass
      */
     private $messengerGroupsByClass = [];
 
@@ -78,5 +78,15 @@ class MessengerConfigurationProvider extends AbstractConfigurationProvider
     public function isGroupAllowedForMessenger($groupName, $messenger)
     {
         return in_array($groupName, $this->getMessengerAllowedGroups($messenger));
+    }
+
+    /**
+     * Lists all messenger groups indexed by class name
+     *
+     * @return array
+     */
+    public function getMessengerGroupsByClass()
+    {
+        return $this->messengerGroupsByClass;
     }
 }

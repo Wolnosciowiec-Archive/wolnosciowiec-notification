@@ -23,6 +23,11 @@ class Message implements MessageInterface
     private $groupName = null;
 
     /**
+     * @var bool $couldBeTruncated
+     */
+    private $couldBeTruncated = true;
+
+    /**
      * @param string $content
      */
     public function __construct(string $content = '')
@@ -65,14 +70,23 @@ class Message implements MessageInterface
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getCouldBeTruncated(): bool
+    {
+        return $this->couldBeTruncated;
+    }
+
+    /**
      * @return string
      */
     public function serialize()
     {
         return serialize([
-            'content'   => $this->content,
-            'id'        => $this->id,
-            'group_name' => $this->groupName,
+            'content'            => $this->content,
+            'id'                 => $this->id,
+            'group_name'         => $this->groupName,
+            'could_be_truncated' => $this->couldBeTruncated,
         ]);
     }
 
@@ -82,9 +96,10 @@ class Message implements MessageInterface
     public function unserialize($serialized)
     {
         $data = unserialize($serialized);
-        $this->content = $data['content'] ?? '';
-        $this->id      = $data['id'] ?? null;
-        $this->groupName = $data['group_name'] ?? null;
+        $this->content          = $data['content']            ?? '';
+        $this->id               = $data['id']                 ?? null;
+        $this->groupName        = $data['group_name']         ?? null;
+        $this->couldBeTruncated = $data['could_be_truncated'] ?? null;
     }
 
     /**
@@ -94,6 +109,16 @@ class Message implements MessageInterface
     public function setGroupName($groupName)
     {
         $this->groupName = $groupName;
+        return $this;
+    }
+
+    /**
+     * @param boolean $couldBeTruncated
+     * @return Message
+     */
+    public function setCouldBeTruncated($couldBeTruncated)
+    {
+        $this->couldBeTruncated = $couldBeTruncated;
         return $this;
     }
 }

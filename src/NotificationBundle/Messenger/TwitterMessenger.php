@@ -19,11 +19,13 @@ class TwitterMessenger implements MessengerInterface
 
     /**
      * @param MessengerConfigurationProvider $configurationProvider
+     * @param LoggerInterface                $logger
      */
     public function __construct(
         MessengerConfigurationProvider $configurationProvider,
         LoggerInterface $logger)
     {
+        $this->logger = $logger;
         $this->client = new \Twitter(
             $configurationProvider->get('consumer_key', 'twitter'),
             $configurationProvider->get('consumer_secret', 'twitter'),
@@ -33,12 +35,30 @@ class TwitterMessenger implements MessengerInterface
     }
 
     /**
+     * @param MessageInterface $message
+     * @return MessageInterface|string
+     */
+    private function correctMessageContent(MessageInterface $message)
+    {
+        if ($message->getCouldBeTruncated() === true
+            && strlen($message->getContent()) > 140) {
+
+            return substr($message->getContent(), 0, 140);
+        }
+
+        return $message->getContent();
+    }
+
+
+    /**
      * @inheritdoc
      */
     public function send(MessageInterface $message): bool
     {
+        $content = $this->correctMessageContent($message);
+
         try {
-            $this->client->send($message->getContent());
+            $this->client->send($content);
         }
         catch (\TwitterException $e) {
             $this->logger->error(

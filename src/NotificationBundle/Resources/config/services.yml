@@ -25,12 +25,15 @@ services:
         class: NotificationBundle\Messenger\TwitterMessenger
         arguments:
             configurationProvider: "@notificationbundle.services.configuration.messenger"
+            logger:                "@logger"
 
     # Validators
     notificationbundle.validator.message:
         class: NotificationBundle\Controller\Validator\NewMessageValidator
         arguments:
             factory: "@notificationbundle.factory.message"
+            logger:  "@logger"
+            messengerConfiguration: "@notificationbundle.services.configuration.messenger"
 
     # Services
     notificationbundle.services.sender:

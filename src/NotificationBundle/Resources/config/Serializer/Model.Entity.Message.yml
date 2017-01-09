@@ -10,3 +10,6 @@ NotificationBundle\Model\Entity\Message:
         groupName:
             type: string
             expose: true
+        couldBeTruncated:
+            type: boolean
+            expose: true

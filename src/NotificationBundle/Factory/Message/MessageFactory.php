@@ -5,6 +5,7 @@ namespace NotificationBundle\Factory\Message;
 use NotificationBundle\Model\Entity\Exception\IncompleteMessageParametersException;
 use NotificationBundle\Model\Entity\Exception\InvalidMessageTypeException;
 use NotificationBundle\Model\Entity\MessageInterface;
+use NotificationBundle\Services\ConfigurationProvider\MessengerConfigurationProvider;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -26,13 +27,15 @@ class MessageFactory
     private $logger;
 
     /**
-     * @param SerializerInterface $serializer
-     * @param LoggerInterface     $logger
+     * @param SerializerInterface            $serializer
+     * @param LoggerInterface                $logger
      */
-    public function __construct($serializer, LoggerInterface $logger)
+    public function __construct(
+        $serializer,
+        LoggerInterface $logger)
     {
-        $this->serializer = $serializer;
-        $this->logger     = $logger;
+        $this->serializer    = $serializer;
+        $this->logger        = $logger;
     }
 
     /**
@@ -60,23 +63,6 @@ class MessageFactory
             $this->allowedClasses[$className],
             'json'
         );
-
-        if ($message->getGroupName() === null
-            || $message->getContent() === null) {
-            $this->logger->error('Invalid data object in request, missing required fields');
-
-            throw new IncompleteMessageParametersException(
-                'Missing "group_name" or "content" fields. ' .
-                'Check documentation for input "message_type"');
-        }
-
-        if (!$message instanceof MessageInterface) {
-            $this->logger->critical(
-                '"' . get_class($message) . '" should implement the MessageInterface' .
-                ', this means probably a wrong class is accepted in your application config');
-
-            throw new InvalidMessageTypeException('"' . get_class($message) . '" should implement the MessageInterface');
-        }
 
         return $message;
     }

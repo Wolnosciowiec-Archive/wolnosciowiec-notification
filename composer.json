@@ -1,8 +1,8 @@
 {
-    "name": "wolnosciowiec/wolnosciowiec-social-share",
+    "name": "wolnosciowiec/wolnosciowiec-notification",
     "license": "LGPLv3",
     "type": "project",
-    "description": "An API gateway for creating posts in social networks",
+    "description": "An API gateway for sending notifications to different channels",
     "autoload": {
         "psr-4": { "": "src/" },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
