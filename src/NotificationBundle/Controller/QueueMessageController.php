@@ -61,11 +61,10 @@ class QueueMessageController extends FOSRestController
 
     /**
      * @Route(requirements={"_format"="json"}, methods={"GET"})
-     * @param Request $request
      *
      * @return Response
      */
-    public function processAction(Request $request)
+    public function processAction()
     {
         $sender  = $this->get('notificationbundle.services.sender');
         $cleaner = $this->get('notificationbundle.services.cleaner.queue');

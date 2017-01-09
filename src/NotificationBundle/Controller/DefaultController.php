@@ -2,12 +2,16 @@
 
 namespace NotificationBundle\Controller;
 
-use NotificationBundle\Model\Entity\Message;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use FOS\RestBundle\Controller\Annotations\RouteResource;
+use FOS\RestBundle\Controller\Annotations\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\VarDumper\VarDumper;
 
+/**
+ * @RouteResource("/")
+ * @package NotificationBundle\Controller
+ */
 class DefaultController extends Controller
 {
     /**
@@ -15,13 +19,11 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        VarDumper::dump(
-            $this->get('notificationbundle.services.sender')->send(new Message('This is a test'))
+        return new JsonResponse(
+            [
+                'message' => 'pong',
+            ],
+            200
         );
-
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-        ]);
     }
 }

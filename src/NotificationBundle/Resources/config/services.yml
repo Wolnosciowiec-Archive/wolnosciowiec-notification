@@ -53,3 +53,11 @@ services:
         class: NotificationBundle\Services\QueueCleanerService
         arguments:
             factory: "@notificationbundle.factory.queue"
+
+    notificationbundle.services.processor.queue:
+        class: NotificationBundle\Services\Processor\QueueProcessor
+        arguments:
+            sender: "@notificationbundle.services.sender"
+            cleaner: "@notificationbundle.services.cleaner.queue"
+            factory: "@notificationbundle.factory.queue"
+
