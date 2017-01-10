@@ -25,13 +25,27 @@ framework:
 
 doctrine:
     dbal:
-        driver:   pdo_sqlite
+        driver:   "%database_driver%"
         host:     "%database_host%"
         port:     "%database_port%"
         dbname:   "%database_name%"
         user:     "%database_user%"
         password: "%database_password%"
+        path:     "%database_path%"
         charset:  UTF8
+
+    orm:
+        default_entity_manager:  ~
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+
+
+        mappings:
+            NotificationBundle:
+                type: yml
+                prefix: NotificationBundle
+                dir: Resources/config/doctrine
+                alias: NotificationBundle
 
 jms_serializer:
     handlers:

@@ -61,3 +61,12 @@ services:
             cleaner: "@notificationbundle.services.cleaner.queue"
             factory: "@notificationbundle.factory.queue"
 
+
+    # Security
+    notificationbundle.security.token_authenticator:
+        class: NotificationBundle\Security\TokenAuthenticator
+
+    notificationbundle.security.user_provider:
+        class: NotificationBundle\Security\UserProvider
+        arguments:
+            em: "@doctrine.orm.entity_manager"
