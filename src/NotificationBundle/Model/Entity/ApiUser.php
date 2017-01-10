@@ -6,6 +6,7 @@ use NotificationBundle\Security\Roles;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * @codeCoverageIgnore
  * @package NotificationBundle\Model\Entity
  */
 class ApiUser implements UserInterface

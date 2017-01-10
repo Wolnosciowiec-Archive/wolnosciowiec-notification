@@ -18,6 +18,7 @@ interface QueueInterface
      * Push a new item to the queue
      *
      * @param MessageInterface $message
+     * @return bool
      */
     public function push(MessageInterface $message);
 
@@ -25,6 +26,7 @@ interface QueueInterface
      * Remove from queue by MessageInterface object
      *
      * @param MessageInterface $message
+     * @return bool
      */
     public function popOut(MessageInterface $message);
 
@@ -32,6 +34,7 @@ interface QueueInterface
      * Remove from the queue by id
      *
      * @param string $id
+     * @return bool
      */
     public function popOutById(string $id);
 

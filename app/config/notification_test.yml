@@ -1,0 +1,26 @@
+notification:
+    queue: "notificationbundle.queue.null"
+    queue_parameters:
+        test_parameter: "test value"
+        second_parameter: 123
+
+    allowed_entities:
+        Message: "NotificationBundle\\Model\\Entity\\Message"
+
+    enabled_messengers:
+        "notificationbundle.messenger.null":
+            class: NotificationBundle\Messenger\NullMessenger
+            groups:
+                - admin_alert
+                - example_1
+
+    messengers:
+        twitter:
+            consumer_key: A
+            consumer_secret: B
+            access_token: c
+            access_token_secret: d
+
+        facebook:
+            app_id: xxx
+            app_secret: yyy

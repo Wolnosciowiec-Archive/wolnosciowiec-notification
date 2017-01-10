@@ -25,7 +25,7 @@ class QueueFactory
     /**
      * @return QueueInterface
      */
-    public function getQueue()
+    public function getQueue(): QueueInterface
     {
         return $this->queueService;
     }
