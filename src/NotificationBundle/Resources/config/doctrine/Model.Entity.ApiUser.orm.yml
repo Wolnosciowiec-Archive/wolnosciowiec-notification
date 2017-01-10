@@ -1,7 +1,6 @@
 NotificationBundle\Model\Entity\ApiUser:
     type: entity
     table: wnotify_apiuser
-    readOnly: true
 
     id:
         id:

@@ -19,6 +19,9 @@ services:
         arguments:
             configurationProvider: "@notificationbundle.services.configuration.queue"
 
+    notificationbundle.queue.null:
+        class: NotificationBundle\Queue\NullQueue
+
 
     # Messengers
     notificationbundle.messenger.twitter:
@@ -26,6 +29,9 @@ services:
         arguments:
             configurationProvider: "@notificationbundle.services.configuration.messenger"
             logger:                "@logger"
+
+    notificationbundle.messenger.null:
+        class: NotificationBundle\Messenger\NullMessenger
 
     # Validators
     notificationbundle.validator.message:

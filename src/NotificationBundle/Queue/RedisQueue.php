@@ -74,6 +74,7 @@ class RedisQueue implements QueueInterface
     public function push(MessageInterface $message)
     {
         $this->client->set($this->getPrefix() . $message->getId(), $this->encode($message));
+        return true;
     }
 
     /**
@@ -100,7 +101,7 @@ class RedisQueue implements QueueInterface
      */
     public function popOut(MessageInterface $message)
     {
-        $this->popOutById($message->getId());
+        return  $this->popOutById($message->getId());
     }
 
     /**
@@ -109,5 +110,6 @@ class RedisQueue implements QueueInterface
     public function popOutById(string $id)
     {
         $this->client->del([$this->getPrefix() . $id]);
+        return true;
     }
 }
