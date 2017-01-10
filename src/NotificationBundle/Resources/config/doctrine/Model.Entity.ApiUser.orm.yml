@@ -1,0 +1,37 @@
+NotificationBundle\Model\Entity\ApiUser:
+    type: entity
+    table: wnotify_apiuser
+    readOnly: true
+
+    id:
+        id:
+            type: guid
+            unique: false
+            nullable: false
+            id: true
+            length: 36
+            generator:
+                strategy: UUID
+
+    fields:
+        apiKey:
+            type: string
+            length: 128
+            column: api_key
+            unique: true
+
+        username:
+            type: string
+            length: 64
+            column: name
+
+        dateAdded:
+            type: datetimetz
+            length: null
+            unique: false
+            nullable: false
+            column: date_added
+
+        active:
+            type: boolean
+            column: active

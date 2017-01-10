@@ -1,10 +1,27 @@
 security:
     providers:
-        in_memory:
-            memory: ~
+        apiuser:
+            id: notificationbundle.security.user_provider
+
+
+    encoders:
+        NotificationBundle\Model\Entity\ApiUser: bcrypt
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: ~
+            logout: ~
+
+            guard:
+                authenticators:
+                    - notificationbundle.security.token_authenticator
+
+            stateless: true
+
+    access_control:
+        # this is a catch-all for the admin area
+        # additional security lives in the controllers
+        - { path: ^/message/, roles: ROLE_SEND_MESSAGES }
