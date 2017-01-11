@@ -26,6 +26,12 @@ interface MessageInterface extends \Serializable
     public function getContent(): string;
 
     /**
+     * @notifyField Short title, a headline
+     * @return string
+     */
+    public function getTitle(): string;
+
+    /**
      * @notifyField If the text is too long, then its length could be adjusted by the Messenger
      * @return bool
      */
