@@ -30,7 +30,7 @@ class MessengerConfigurationProvider extends AbstractConfigurationProvider
 
                 throw new InvalidConfigurationException(
                     $serviceId . ': Invalid configuration in section notification/enabled_messengers.' .
-                    ' Missing a valid class or list of groups');
+                    ' Missing a valid class or list of groups. Got "' . json_encode($group) . '"');
             }
 
             $this->messengerGroupsByClass[$group['class']] = $group['groups'];

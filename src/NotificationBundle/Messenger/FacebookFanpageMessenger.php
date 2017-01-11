@@ -21,11 +21,15 @@ class FacebookFanPageMessenger implements MessengerInterface
     /** @var string $accessToken */
     private $accessToken = '';
 
+    /** @var MessengerConfigurationProvider $conf */
+    private $conf;
+
     /**
      * @param MessengerConfigurationProvider $configurationProvider
      */
     public function __construct(MessengerConfigurationProvider $configurationProvider)
     {
+        $this->conf   = $configurationProvider;
         $this->client = new Facebook([
             'app_id'     => $configurationProvider->get('app_id', 'facebook'),
             'app_secret' => $configurationProvider->get('app_secret', 'facebook'),
@@ -41,17 +45,14 @@ class FacebookFanPageMessenger implements MessengerInterface
     private function getAccessToken(): string
     {
         if (strlen($this->accessToken) === 0) {
-            $response = $this->client->get('/' . $this->wallId . '?fields=access_token');
-            $response->decodeBody();
-            $decoded = $response->getDecodedBody();
 
-            if (!isset($decoded['access_token']) || empty($decoded['access_token'])) {
-                throw new InvalidMessengerConfigurationException(
-                    'FacebookFanPage: Cannot get the access_token from server. ' .
-                    'Details: ' . json_encode($decoded));
-            }
+            $token = explode('access_token=', shell_exec(
+                'curl -s  https://graph.facebook.com/v2.2/oauth/access_token\?grant_type\=client_credentials' .
+                '\&redirect_uri=https://wolnosciowiec.net/oauth/fb' .
+                '\&client_id\=' . $this->conf->get('app_id', 'facebook') .
+                '\&client_secret\=' . $this->conf->get('app_secret', 'facebook')));
 
-            $this->accessToken = $decoded['access_token'];
+            $this->accessToken = $token[1];
         }
 
         return $this->accessToken;

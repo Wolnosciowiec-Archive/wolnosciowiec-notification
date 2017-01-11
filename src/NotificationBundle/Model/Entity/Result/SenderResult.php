@@ -96,6 +96,13 @@ class SenderResult
         if ($skipped === true) {
             $this->skipped[] = $message->getId();
         }
+        else {
+            $index = array_search($message->getId(), $this->skipped);
+
+            if ($index !== false) {
+                unset($this->skipped[array_search($message->getId(), $this->skipped)]);
+            }
+        }
 
         return $this;
     }
