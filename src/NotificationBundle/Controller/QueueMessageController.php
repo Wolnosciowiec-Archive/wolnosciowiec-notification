@@ -66,15 +66,8 @@ class QueueMessageController extends FOSRestController
      */
     public function processAction()
     {
-        $sender  = $this->get('notificationbundle.services.sender');
-        $cleaner = $this->get('notificationbundle.services.cleaner.queue');
-        $queue   = $this->get('notificationbundle.factory.queue')->getQueue();
-
-        /** @var MessageInterface[] $messages */
-        $messages = array_filter($queue->findAll());
-
-        $results = $sender->send($messages);
-        $cleaner->clearProcessedMessages($results);
+        $results = $this->get('notificationbundle.services.processor.queue')
+            ->process();
 
         $view = $this->view(
             [

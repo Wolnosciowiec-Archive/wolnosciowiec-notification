@@ -30,6 +30,11 @@ services:
             configurationProvider: "@notificationbundle.services.configuration.messenger"
             logger:                "@logger"
 
+    notificationbundle.messenger.facebook:
+        class: NotificationBundle\Messenger\FacebookFanPageMessenger
+        arguments:
+            configurationProvider: "@notificationbundle.services.configuration.messenger"
+
     notificationbundle.messenger.null:
         class: NotificationBundle\Messenger\NullMessenger
 
