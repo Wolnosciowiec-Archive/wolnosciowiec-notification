@@ -28,6 +28,11 @@ class Message implements MessageInterface
     private $couldBeTruncated = true;
 
     /**
+     * @var string $title
+     */
+    private $title = '';
+
+    /**
      * @param string $content
      */
     public function __construct(string $content = '')
@@ -51,6 +56,7 @@ class Message implements MessageInterface
         if (null === $this->id) {
             $data = $this->serialize();
 
+            // don't rely on id when generating id
             if (isset($data['id'])) {
                 unset($data['id']);
             }
@@ -87,6 +93,7 @@ class Message implements MessageInterface
             'id'                 => $this->id,
             'group_name'         => $this->groupName,
             'could_be_truncated' => $this->couldBeTruncated,
+            'title'              => $this->title,
         ]);
     }
 
@@ -100,6 +107,7 @@ class Message implements MessageInterface
         $this->id               = $data['id']                 ?? null;
         $this->groupName        = $data['group_name']         ?? null;
         $this->couldBeTruncated = $data['could_be_truncated'] ?? null;
+        $this->title            = $data['title']              ?? null;
     }
 
     /**
@@ -120,5 +128,23 @@ class Message implements MessageInterface
     {
         $this->couldBeTruncated = $couldBeTruncated;
         return $this;
+    }
+
+    /**
+     * @param string $title
+     * @return Message
+     */
+    public function setTitle(string $title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
     }
 }

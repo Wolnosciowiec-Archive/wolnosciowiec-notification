@@ -13,3 +13,6 @@ NotificationBundle\Model\Entity\Message:
         couldBeTruncated:
             type: boolean
             expose: true
+        title:
+            type: string
+            expose: true

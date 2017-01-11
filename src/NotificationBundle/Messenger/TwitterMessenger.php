@@ -40,6 +40,16 @@ class TwitterMessenger implements MessengerInterface
      */
     private function correctMessageContent(MessageInterface $message)
     {
+        // in first order use the "title"
+        if (strlen($message->getTitle()) > 0) {
+            if (strlen($message->getTitle()) > 140) {
+                return substr($message->getTitle(), 0, 140);
+            }
+
+            return $message->getTitle();
+        }
+
+        // fallback to using "content" (full message)
         if ($message->getCouldBeTruncated() === true
             && strlen($message->getContent()) > 140) {
 
