@@ -43,6 +43,7 @@
         ],
         "post-install-cmd": [
             "@symfony-scripts",
+            "php bin/console cache:clear --env=prod",
             "php ./bin/console doctrine:database:create -n -e prod 2>/dev/null || true",
             "php ./bin/console doctrine:migrations:migrate -n -e prod",
             "composer dump-autoload -o"
