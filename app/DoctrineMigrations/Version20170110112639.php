@@ -29,12 +29,32 @@ class Version20170110112639 extends AbstractMigration implements ContainerAwareI
     /**
      * @return string
      */
-    private function generateRandomKey()
+    private function createApiKey(): string
     {
+        $defaultKey = $this->container->getParameter('default_api_key');
+
+        if (strlen($defaultKey) > 0 && $defaultKey !== '~') {
+            return $defaultKey;
+        }
+
         return substr(
             str_shuffle(sha1(rand(99, 99999) . time())),
             0, 32
         );
+    }
+
+    /**
+     * @return string
+     */
+    private function createUserName(): string
+    {
+        $defaultUserName = $this->container->getParameter('default_api_user');
+
+        if (!empty($defaultUserName)) {
+            return $defaultUserName;
+        }
+
+        return 'app';
     }
 
     /**
@@ -43,12 +63,12 @@ class Version20170110112639 extends AbstractMigration implements ContainerAwareI
     public function up(Schema $schema)
     {
         $apiUser = new ApiUser();
-        $apiUser->setUsername('app');
+        $apiUser->setUsername($this->createUserName());
         $apiUser->setActive(true);
-        $apiUser->setApiKey($this->generateRandomKey());
+        $apiUser->setApiKey($this->createApiKey());
         $apiUser->setDateAdded(new \DateTime());
 
-        $this->write(' ==> Account name: <info>app</info>');
+        $this->write(' ==> Account name: <info>' . $apiUser->getUsername() . '</info>');
         $this->write(' ==> Your API key is <info>' . $apiUser->getApiKey() . '</info>');
 
         $em = $this->container->get('doctrine.orm.entity_manager');
