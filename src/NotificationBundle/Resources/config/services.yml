@@ -35,6 +35,12 @@ services:
         arguments:
             configurationProvider: "@notificationbundle.services.configuration.messenger"
 
+    notificationbundle.messenger.email:
+        class: NotificationBundle\Messenger\EmailMessenger
+        arguments:
+            mailer: "@swiftmailer.mailer.abstract"
+            twig: "@twig"
+
     notificationbundle.messenger.null:
         class: NotificationBundle\Messenger\NullMessenger
 
