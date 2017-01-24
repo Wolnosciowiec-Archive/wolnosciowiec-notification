@@ -22,6 +22,25 @@ framework:
     php_errors:
         log: true
 
+swiftmailer:
+    transport:            '%mailer_transport%'
+    username:             '%mailer_user%'
+    password:             '%mailer_password%'
+    host:                 '%mailer_host%'
+    port:                 false
+    encryption:           ~
+    auth_mode:            ~
+    spool:
+        type:                 file
+        path:                 '%kernel.cache_dir%/swiftmailer/spool'
+    sender_address:       ~
+    antiflood:
+        threshold:            99
+        sleep:                0
+    delivery_addresses:   []
+    disable_delivery:     ~
+    logging:              '%kernel.debug%'
+
 doctrine:
     dbal:
         driver:   "%database_driver%"
