@@ -1,0 +1,31 @@
+NotificationBundle\Model\Entity\FailureMailMessage:
+    properties:
+        serviceName:
+            - NotBlank:
+                message: "service_name_required"
+
+            - Length:
+                min: 2
+                max: 16
+                minMessage: "service_name_length_2_to_16"
+                maxMessage: "service_name_length_2_to_16"
+
+        requestString:
+            - NotBlank:
+                message: "request_information_required"
+
+            - Length:
+                min: 8
+                max: 512
+                minMessage: "request_information_length_8_to_512"
+                maxMessage: "request_information_length_8_to_512"
+
+        exceptionMessage:
+            - NotBlank:
+                message: "exception_message_required"
+
+            - Length:
+                min: 1
+                max: 64
+                minMessage: "exception_message_length_1_to_64"
+                maxMessage: "exception_message_length_1_to_64"

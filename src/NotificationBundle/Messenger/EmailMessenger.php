@@ -5,6 +5,8 @@ namespace NotificationBundle\Messenger;
 use NotificationBundle\Model\Entity\MailMessageInterface;
 use NotificationBundle\Model\Entity\MessageInterface;
 use NotificationBundle\Model\Entity\WithRendererInterface;
+use NotificationBundle\Services\ConfigurationProvider\MessengerConfigurationProvider;
+use Psr\Log\LoggerInterface;
 
 /**
  * @package NotificationBundle\Factory\Messenger
@@ -22,13 +24,52 @@ class EmailMessenger implements MessengerInterface
     private $twig;
 
     /**
+     * @var MessengerConfigurationProvider $configurationProvider
+     */
+    private $config;
+
+    /**
+     * @var LoggerInterface $logger
+     */
+    private $logger;
+
+    /**
      * @param \Swift_Mailer $mailer
      * @param \Twig_Environment $twig
+     * @param LoggerInterface $logger
+     * @param MessengerConfigurationProvider $configurationProvider
      */
-    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig)
-    {
+    public function __construct(
+        \Swift_Mailer     $mailer,
+        \Twig_Environment $twig,
+        LoggerInterface   $logger,
+        MessengerConfigurationProvider $configurationProvider
+    ) {
         $this->mailer = $mailer;
         $this->twig   = $twig;
+        $this->logger = $logger;
+        $this->config = $configurationProvider;
+    }
+
+    /**
+     * @return string
+     */
+    private function getFromAddress(): string
+    {
+        return $this->config->get('default_from', 'email');
+    }
+
+    /**
+     * @param MailMessageInterface $message
+     * @return array
+     */
+    private function getRecipients(MailMessageInterface $message) : array
+    {
+        if (empty($message->getRecipients())) {
+            return $this->config->get('default_recipients', 'email') ?? [];
+        }
+
+        return $message->getRecipients() ?? [];
     }
 
     /**
@@ -57,15 +98,32 @@ class EmailMessenger implements MessengerInterface
     public function send(MessageInterface $message): bool
     {
         if (!$message instanceof MailMessageInterface) {
+            $this->logger->debug('Message is not a mail, not handling');
             return false;
         }
 
+        if (empty($this->getRecipients($message))) {
+            $this->logger->notice('Missing recipients, cannot send');
+            return false;
+        }
+
+        $messageBody = $this->renderMessage($message);
+
         $mailMessage = new \Swift_Message(
-            $this->renderMessage($message),
-            $message->getContent()
+            substr($message->getSubject(), 0, 64),
+            $messageBody
         );
 
-        $mailMessage->setTo($message->getRecipients());
+        $mailMessage->setContentType('text/html');
+        $mailMessage->setFrom($this->getFromAddress());
+        $mailMessage->setTo($this->getRecipients($message));
+
+        // logging
+        $this->logger->debug('Sending from ' .
+            json_encode($mailMessage->getFrom()) .
+            ' to ' .
+            json_encode($mailMessage->getTo())
+        );
 
         return $this->mailer->send($mailMessage) > 0;
     }

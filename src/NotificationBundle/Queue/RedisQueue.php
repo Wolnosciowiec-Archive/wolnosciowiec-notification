@@ -2,9 +2,12 @@
 
 namespace NotificationBundle\Queue;
 
+use JMS\Serializer\Exception\RuntimeException;
+use JMS\Serializer\SerializerInterface;
 use NotificationBundle\Model\Entity\Exception\QueueException;
 use NotificationBundle\Model\Entity\MessageInterface;
 use NotificationBundle\Services\ConfigurationProvider\QueueConfigurationProvider;
+use Psr\Log\LoggerInterface;
 
 /**
  * Queue implementation in Redis as a storage
@@ -19,9 +22,24 @@ class RedisQueue implements QueueInterface
      */
     private $client;
 
-    public function __construct(QueueConfigurationProvider $configurationProvider)
-    {
-        $this->client = new \Predis\Client($configurationProvider->getAll());
+    /**
+     * @var SerializerInterface $serializer
+     */
+    private $serializer;
+
+    /**
+     * @var LoggerInterface $logger
+     */
+    private $logger;
+
+    public function __construct(
+        QueueConfigurationProvider $configurationProvider,
+        SerializerInterface $serializer,
+        LoggerInterface $logger
+    ) {
+        $this->client     = new \Predis\Client($configurationProvider->getAll());
+        $this->serializer = $serializer;
+        $this->logger     = $logger;
     }
 
     /**
@@ -33,7 +51,7 @@ class RedisQueue implements QueueInterface
         return json_encode(
             [
                 'class' => get_class($message),
-                'data'  => $message->serialize(),
+                'data'  => base64_encode($this->serializer->serialize($message, 'json')),
             ]
         );
     }
@@ -53,11 +71,13 @@ class RedisQueue implements QueueInterface
             throw new QueueException('Decode failed, object was not properly saved or was truncated');
         }
 
-        /** @var MessageInterface $object */
-        $object = new $array['class']();
-        $object->unserialize($array['data']);
+        try {
+            return $this->serializer->deserialize(base64_decode($array['data']), $array['class'], 'json');
 
-        return $object;
+        } catch (RuntimeException $e) {
+            $this->logger->error('Deserialization failed: ' . $e->getMessage());
+            throw new QueueException('Decode failed, probably a malformed data was put into queue, or upgrade from older version was performed', 0, $e);
+        }
     }
 
     /**
@@ -90,6 +110,8 @@ class RedisQueue implements QueueInterface
                 return $this->decode($this->client->get($item));
             }
             catch (QueueException $e) {
+                $this->logger->error('Got error while decoding item. ' . $e->getMessage() . ', content: ' . $item);
+                $this->popOutById($item);
                 return null;
             }
 
@@ -101,7 +123,7 @@ class RedisQueue implements QueueInterface
      */
     public function popOut(MessageInterface $message)
     {
-        return  $this->popOutById($message->getId());
+        return $this->popOutById($message->getId());
     }
 
     /**
@@ -109,7 +131,7 @@ class RedisQueue implements QueueInterface
      */
     public function popOutById(string $id)
     {
-        $this->client->del([$this->getPrefix() . $id]);
+        $this->client->del([$this->getPrefix() . str_replace($this->getPrefix(), '', $id)]);
         return true;
     }
 }

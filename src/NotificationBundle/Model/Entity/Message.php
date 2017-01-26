@@ -2,10 +2,12 @@
 
 namespace NotificationBundle\Model\Entity;
 
+use NotificationBundle\Model\Entity\Base\AutoSerializable;
+
 /**
  * @package NotificationBundle\Model\Entity
  */
-class Message implements MessageInterface
+class Message extends AutoSerializable implements MessageInterface
 {
     /**
      * @var string $content
@@ -81,33 +83,6 @@ class Message implements MessageInterface
     public function getCouldBeTruncated(): bool
     {
         return $this->couldBeTruncated;
-    }
-
-    /**
-     * @return string
-     */
-    public function serialize()
-    {
-        return serialize([
-            'content'            => $this->content,
-            'id'                 => $this->id,
-            'group_name'         => $this->groupName,
-            'could_be_truncated' => $this->couldBeTruncated,
-            'title'              => $this->title,
-        ]);
-    }
-
-    /**
-     * @param string $serialized
-     */
-    public function unserialize($serialized)
-    {
-        $data = unserialize($serialized);
-        $this->content          = $data['content']            ?? '';
-        $this->id               = $data['id']                 ?? null;
-        $this->groupName        = $data['group_name']         ?? null;
-        $this->couldBeTruncated = $data['could_be_truncated'] ?? null;
-        $this->title            = $data['title']              ?? null;
     }
 
     /**

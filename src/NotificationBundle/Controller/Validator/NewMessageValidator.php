@@ -10,6 +10,8 @@ use NotificationBundle\Model\Entity\MessageInterface;
 use NotificationBundle\Model\Entity\Result\ValidationResult;
 use NotificationBundle\Services\ConfigurationProvider\MessengerConfigurationProvider;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Validator for creation of a new MessageInterface object
@@ -24,19 +26,25 @@ class NewMessageValidator
     /** @var MessengerConfigurationProvider $messengerConf */
     private $messengerConf;
 
+    /** @var ValidatorInterface $validator */
+    private $validator;
+
     /**
      * @param MessageFactory                 $factory
      * @param LoggerInterface                $logger
      * @param MessengerConfigurationProvider $messengerConfiguration
+     * @param ValidatorInterface             $validator
      */
     public function __construct(
         MessageFactory $factory,
         LoggerInterface $logger,
-        MessengerConfigurationProvider $messengerConfiguration)
-    {
+        MessengerConfigurationProvider $messengerConfiguration,
+        ValidatorInterface $validator
+    ) {
         $this->factory       = $factory;
         $this->logger        = $logger;
         $this->messengerConf = $messengerConfiguration;
+        $this->validator     = $validator;
     }
 
     /**
@@ -57,15 +65,30 @@ class NewMessageValidator
         try {
             $message = $this->factory->createMessage($data, $messageType);
             $this->validateMessage($message);
-        }
-        catch (InvalidMessageTypeException $e) {
+
+        } catch (InvalidMessageTypeException $e) {
             return new ValidationResult(false, 'invalid_message_type');
-        }
-        catch (IncompleteMessageParametersException $e) {
+
+        } catch (IncompleteMessageParametersException $e) {
             return new ValidationResult(false, 'missing_input_parameters', $e->getMessage());
-        }
-        catch (InvalidMessageGroupException $e) {
+
+        } catch (InvalidMessageGroupException $e) {
             return new ValidationResult(false, 'invalid_group_name', $e->getMessage());
+        }
+
+        /** @var array $errors */
+        $errors = $this->validator->validate($message);
+
+        if (count($errors) > 0) {
+
+            $errorMessages = [];
+
+            /** @var ConstraintViolation $error */
+            foreach ($errors as $error) {
+                $errorMessages[] = $error->getMessage();
+            }
+
+            return new ValidationResult(false, 'validation_failed', implode(', ', array_unique($errorMessages)));
         }
 
         if (!isset($message)) {

@@ -12,12 +12,13 @@ services:
             serializer: "@serializer"
             logger:     "@logger"
 
-
     # Queues
     notificationbundle.queue.redis:
         class: NotificationBundle\Queue\RedisQueue
         arguments:
             configurationProvider: "@notificationbundle.services.configuration.queue"
+            serializer: "@serializer"
+            logger: "@logger"
 
     notificationbundle.queue.null:
         class: NotificationBundle\Queue\NullQueue
@@ -38,8 +39,10 @@ services:
     notificationbundle.messenger.email:
         class: NotificationBundle\Messenger\EmailMessenger
         arguments:
-            mailer: "@swiftmailer.mailer.abstract"
+            mailer: "@swiftmailer.mailer"
             twig: "@twig"
+            logger: "@logger"
+            configurationProvider: "@notificationbundle.services.configuration.messenger"
 
     notificationbundle.messenger.null:
         class: NotificationBundle\Messenger\NullMessenger
@@ -51,6 +54,7 @@ services:
             factory: "@notificationbundle.factory.message"
             logger:  "@logger"
             messengerConfiguration: "@notificationbundle.services.configuration.messenger"
+            validator: "@validator"
 
     # Services
     notificationbundle.services.sender:
