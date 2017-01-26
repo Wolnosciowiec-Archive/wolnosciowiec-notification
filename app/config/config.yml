@@ -8,6 +8,7 @@ parameters:
 
 framework:
     secret:          "%secret%"
+    validation:      { enabled: true, enable_annotations: false }
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
@@ -22,23 +23,27 @@ framework:
     php_errors:
         log: true
 
+twig:
+    paths:
+        '%kernel.root_dir%/../src/NotificationBundle/Resources/views': app
+
 swiftmailer:
     transport:            '%mailer_transport%'
     username:             '%mailer_user%'
     password:             '%mailer_password%'
     host:                 '%mailer_host%'
-    port:                 false
-    encryption:           ~
+    port:                 '%mailer_port%'
+    encryption:           '%mailer_encryption%'
     auth_mode:            ~
     spool:
         type:                 file
         path:                 '%kernel.cache_dir%/swiftmailer/spool'
-    sender_address:       ~
+    sender_address:       '%mailer_sender_address%'
     antiflood:
         threshold:            99
         sleep:                0
     delivery_addresses:   []
-    disable_delivery:     ~
+    disable_delivery:     false
     logging:              '%kernel.debug%'
 
 doctrine:

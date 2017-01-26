@@ -1,0 +1,25 @@
+<h1>{{ message.getSubject() }}</h1>
+
+A service <i>{{ message.getServiceName() }}</i> reported a failure.
+
+{% if message.getExceptionMessage()|length %}
+    <br/>{{ message.getExceptionMessage() }}
+{% endif %}
+
+{% if message.getRequestString() %}
+    <br/><br/><b>Request:</b>
+    <br/>{{ message.getRequestString() }}
+{% endif %}
+
+{% if message.getFilePath()|length > 0 %}
+    <br/><br/><b>File:</b> {{ message.getFilePath() }}{% if message.getFileLine()|length > 0 %}:{{ message.getFileLine() }}{% endif %}
+{% endif %}
+
+{% if message.getTrace()|length > 0 %}
+    <h3>Stack trace</h3>
+    <ul>
+        {% for line in message.getTrace() %}
+            <li>{{ line }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}

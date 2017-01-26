@@ -1,0 +1,11 @@
+NotificationBundle\Model\Entity\MailMessage:
+    exclusion_policy: none
+    properties:
+        subject:
+            type: string
+
+        from:
+            type: string
+
+        recipients:
+            type: array

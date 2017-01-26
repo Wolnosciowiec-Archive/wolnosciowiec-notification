@@ -5,7 +5,7 @@ namespace NotificationBundle\Model\Entity;
 /**
  * @package NotificationBundle\Model\Entity
  */
-interface MessageInterface extends \Serializable
+interface MessageInterface
 {
     /**
      * @notifyField Identifier, allows to find specific element. It's also an UNIQUE key for notifications.

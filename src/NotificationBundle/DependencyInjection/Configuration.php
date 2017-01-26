@@ -59,6 +59,11 @@ class Configuration implements ConfigurationInterface
                         ->ignoreExtraKeys(false)
                     ->end()
                 ->end()
+                ->children()
+                    ->arrayNode('email')
+                        ->ignoreExtraKeys(false)
+                    ->end()
+                ->end()
             ->end()
         ;
 

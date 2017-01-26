@@ -60,6 +60,7 @@ class MessageSenderService
 
         foreach ($messages as $message) {
             foreach ($this->factory->getMessengers() as $messenger) {
+                $this->logger->info('Trying Messenger=' . get_class($messenger) . ' for Message=' . $message->getId());
 
                 // cannot be sent because of group
                 if ($this->messengerConfiguration

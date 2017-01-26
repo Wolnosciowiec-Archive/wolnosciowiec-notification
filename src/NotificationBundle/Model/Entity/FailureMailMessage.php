@@ -39,7 +39,7 @@ class FailureMailMessage extends MailMessage implements WithRendererInterface
     public function getContent(): string
     {
         // content is rendered using WithRendererInterface
-        return '';
+        return '-';
     }
 
     /**
@@ -48,7 +48,7 @@ class FailureMailMessage extends MailMessage implements WithRendererInterface
      */
     public function getTemplateName() : string
     {
-        return 'FailureMessage.html.twig';
+        return '@app/Messages/FailureMessage.html.twig';
     }
 
     /**

@@ -11,10 +11,10 @@ class MailMessage extends Message implements MailMessageInterface
     private $subject;
 
     /** @var string $from */
-    private $from;
+    private $from = '';
 
     /** @var array $recipients */
-    private $recipients;
+    private $recipients = [];
 
     /**
      * @return string

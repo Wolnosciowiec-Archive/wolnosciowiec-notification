@@ -1,0 +1,21 @@
+NotificationBundle\Model\Entity\FailureMailMessage:
+    exclusion_policy: none
+    properties:
+        serviceName:
+            type: string
+
+        requestString:
+            type: string
+
+        trace:
+            type: array
+
+        filePath:
+            type: string
+
+        fileLine:
+            type: integer
+
+        exceptionMessage:
+            type: string
+

@@ -46,17 +46,20 @@ abstract class AbstractConfigurationProvider
     }
 
     /**
-     * @param string $variable
-     * @param string $section
+     * @param string     $variable
+     * @param string     $section
+     * @param null|mixed $default
+     *
+     * @return mixed
      */
-    public function get($variable, $section)
+    public function get($variable, $section, $default = null)
     {
         $configuration = $this->getConfiguration($section);
 
-        if (!isset($configuration[$variable])) {
+        if (!isset($configuration[$variable]) && $default !== null) {
             throw new \InvalidArgumentException(get_class() . ': Invalid option "' . $variable . '", not specified in config under "' . $section . '"');
         }
 
-        return $configuration[$variable];
+        return $configuration[$variable] ?? $default;
     }
 }
