@@ -52,7 +52,7 @@ class NewMessageValidator
      * @param string $messageType
      * @return ValidationResult
      */
-    public function validate($data, $messageType)
+    public function validate(array $data, string $messageType): ValidationResult
     {
         if (strlen($messageType) === 0) {
             return new ValidationResult(false, 'missing_message_type');
@@ -91,9 +91,11 @@ class NewMessageValidator
             return new ValidationResult(false, 'validation_failed', implode(', ', array_unique($errorMessages)));
         }
 
+        // @codeCoverageIgnoreStart
         if (!isset($message)) {
             return new ValidationResult(false, 'cannot_create_message');
         }
+        // @codeCoverageIgnoreEnd
 
         return new ValidationResult(true);
     }
@@ -107,7 +109,7 @@ class NewMessageValidator
      *
      * @return bool
      */
-    public function validateMessage(MessageInterface $message)
+    public function validateMessage(MessageInterface $message): bool
     {
         if ($message->getGroupName() === null
             || $message->getContent() === null) {
@@ -118,6 +120,7 @@ class NewMessageValidator
                 'Check documentation for input "message_type"');
         }
 
+        // @codeCoverageIgnoreStart
         if (!$message instanceof MessageInterface) {
             $this->logger->critical(
                 '"' . get_class($message) . '" should implement the MessageInterface' .
@@ -125,6 +128,7 @@ class NewMessageValidator
 
             throw new InvalidMessageTypeException('"' . get_class($message) . '" should implement the MessageInterface');
         }
+        // @codeCoverageIgnoreEnd
 
         $foundGroup = false;
 

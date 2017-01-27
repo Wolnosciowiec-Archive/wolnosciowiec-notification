@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
+ * @codeCoverageIgnore
  * @package Wolnosciowiec\FileRepositoryBundle\DependencyInjection
  */
 class NotificationExtension extends Extension

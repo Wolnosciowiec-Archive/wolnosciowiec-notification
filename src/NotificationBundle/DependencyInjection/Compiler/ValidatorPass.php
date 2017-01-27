@@ -7,6 +7,10 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @codeCoverageIgnore
+ * @package NotificationBundle\DependencyInjection\Compiler
+ */
 class ValidatorPass implements CompilerPassInterface
 {
     /**
