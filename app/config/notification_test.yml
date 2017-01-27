@@ -6,6 +6,7 @@ notification:
 
     allowed_entities:
         Message: "NotificationBundle\\Model\\Entity\\Message"
+        FailureNotification: "NotificationBundle\\Model\\Entity\\FailureMailMessage"
 
     enabled_messengers:
         "notificationbundle.messenger.null":

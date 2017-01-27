@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace NotificationBundle\Command;
 
@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @codeCoverageIgnore The logic code is placed in services which are tested, so the command don't have to be tested
  * @package NotificationBundle\Commands
  */
 class ProcessQueueCommand extends ContainerAwareCommand

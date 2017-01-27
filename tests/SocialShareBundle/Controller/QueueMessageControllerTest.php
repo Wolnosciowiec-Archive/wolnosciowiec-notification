@@ -111,4 +111,20 @@ class QueueMessageControllerTest extends TestCase
             $this->assertContains($string, $client->getResponse()->getContent());
         }
     }
+
+    public function testProcessAction()
+    {
+        $client = static::createClient();
+        $client->request(
+            'GET',
+            '/message/queue/process',
+            [], [],
+            [
+                'HTTP_X_AUTH_TOKEN' => $this->getTestUser()->getApiKey(),
+                'CONTENT_TYPE' => 'application/json'
+            ]
+        );
+
+        $this->assertContains('"success": true', $client->getResponse()->getContent());
+    }
 }

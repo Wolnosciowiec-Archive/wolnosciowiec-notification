@@ -20,14 +20,14 @@ class ValidationResult
     /**
      * @var string $message
      */
-    private $message = null;
+    private $message = '';
 
     /**
      * @param bool   $status
      * @param string $reason
      * @param string $message
      */
-    public function __construct(bool $status, string $reason = '', string $message = null)
+    public function __construct(bool $status, string $reason = '', string $message = '')
     {
         $this->success = $status;
         $this->reason  = $reason;

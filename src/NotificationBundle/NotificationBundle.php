@@ -2,7 +2,6 @@
 
 namespace NotificationBundle;
 
-use NotificationBundle\DependencyInjection\Compiler\ConfigurationCompilerPass;
 use NotificationBundle\DependencyInjection\Compiler\ValidatorPass;
 use NotificationBundle\DependencyInjection\NotificationExtension;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
@@ -10,7 +9,6 @@ use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\VarDumper\VarDumper;
 
 class NotificationBundle extends Bundle
 {
@@ -25,7 +23,6 @@ class NotificationBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
-        $container->addCompilerPass(new ConfigurationCompilerPass(), PassConfig::TYPE_AFTER_REMOVING);
         $container->addCompilerPass(new ValidatorPass(), PassConfig::TYPE_AFTER_REMOVING);
     }
 }
