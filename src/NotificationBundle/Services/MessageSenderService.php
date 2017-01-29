@@ -90,6 +90,8 @@ class MessageSenderService
                     $this->logger->error('Cannot send a message, id="' . $message->getId()
                         . '", sender="' . get_class($messenger) . '" exception message: "' . $e->getMessage() . '"'
                     );
+
+                    $this->logger->error($e);
                 }
             }
         }

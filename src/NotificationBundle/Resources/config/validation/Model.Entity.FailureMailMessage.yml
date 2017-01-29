@@ -15,10 +15,10 @@ NotificationBundle\Model\Entity\FailureMailMessage:
                 message: "request_information_required"
 
             - Length:
-                min: 8
+                min: 1
                 max: 512
-                minMessage: "request_information_length_8_to_512"
-                maxMessage: "request_information_length_8_to_512"
+                minMessage: "request_information_length_1_to_512"
+                maxMessage: "request_information_length_1_to_512"
 
         exceptionMessage:
             - NotBlank:
@@ -26,6 +26,6 @@ NotificationBundle\Model\Entity\FailureMailMessage:
 
             - Length:
                 min: 1
-                max: 64
-                minMessage: "exception_message_length_1_to_64"
-                maxMessage: "exception_message_length_1_to_64"
+                max: 512
+                minMessage: "exception_message_length_1_to_512"
+                maxMessage: "exception_message_length_1_to_512"

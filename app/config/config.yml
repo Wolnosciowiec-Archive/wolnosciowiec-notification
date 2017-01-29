@@ -38,7 +38,7 @@ swiftmailer:
     spool:
         type:                 file
         path:                 '%kernel.cache_dir%/swiftmailer/spool'
-    sender_address:       '%mailer_sender_address%'
+    sender_address:           '%mailer_sender_address%'
     antiflood:
         threshold:            99
         sleep:                0
