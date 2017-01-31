@@ -7,12 +7,19 @@ notification:
 
     allowed_entities:
         Message: "NotificationBundle\\Model\\Entity\\Message"
+        Exception: "NotificationBundle\\Model\\Entity\\FailureMailMessage"
 
     enabled_messengers:
         "notificationbundle.messenger.twitter":
             class: NotificationBundle\Messenger\TwitterMessenger
             groups:
                 - short_content_update_notification
+
+        "notificationbundle.messenger.email":
+            class: NotificationBundle\Messenger\EmailMessenger
+            groups:
+                - exception
+                - email
 
     messengers:
         twitter:
