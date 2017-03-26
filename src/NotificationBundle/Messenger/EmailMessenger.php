@@ -88,7 +88,7 @@ class EmailMessenger implements MessengerInterface
             );
         }
 
-        return $message->getSubject();
+        return $message->getContent();
     }
 
     /**
