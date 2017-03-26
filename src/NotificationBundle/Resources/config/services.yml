@@ -74,6 +74,7 @@ services:
         class: NotificationBundle\Services\QueueCleanerService
         arguments:
             factory: "@notificationbundle.factory.queue"
+            logger: "@logger"
 
     notificationbundle.services.processor.queue:
         class: NotificationBundle\Services\Processor\QueueProcessor
