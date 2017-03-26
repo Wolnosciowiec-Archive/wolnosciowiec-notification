@@ -8,7 +8,7 @@ namespace NotificationBundle\Model\Entity;
 class MailMessage extends Message implements MailMessageInterface
 {
     /** @var string $subject */
-    private $subject;
+    private $subject = '';
 
     /** @var string $from */
     private $from = '';
@@ -21,6 +21,10 @@ class MailMessage extends Message implements MailMessageInterface
      */
     public function getSubject() : string
     {
+        if (!$this->subject) {
+            return $this->getTitle();
+        }
+
         return $this->subject;
     }
 
