@@ -8,6 +8,7 @@ notification:
     allowed_entities:
         Message: "NotificationBundle\\Model\\Entity\\Message"
         Exception: "NotificationBundle\\Model\\Entity\\FailureMailMessage"
+        MailMessage: "NotificationBundle\\Model\\Entity\\MailMessage"
 
     enabled_messengers:
         "notificationbundle.messenger.twitter":
