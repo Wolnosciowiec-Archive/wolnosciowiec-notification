@@ -58,12 +58,15 @@ class RedisQueue implements QueueInterface
 
     /**
      * @param string $encoded
+     * @param string $key     Key from Redis storage
+     *
      * @throws \Exception
      * @return MessageInterface
      */
-    private function decode($encoded)
+    private function decode($encoded, string $key)
     {
         $array = json_decode($encoded, true);
+        $id = $this->stripPrefixFromKey($key);
 
         if (!is_array($array)
             || !isset($array['class'])
@@ -72,12 +75,24 @@ class RedisQueue implements QueueInterface
         }
 
         try {
-            return $this->serializer->deserialize(base64_decode($array['data']), $array['class'], 'json');
+            // put real redis id
+            $payload = json_decode(base64_decode($array['data']), true);
+            $payload['id'] = $id;
+
+            /** @var MessageInterface $message */
+            $message = $this->serializer->deserialize(json_encode($payload, true), $array['class'], 'json');
+
+            return $message;
 
         } catch (RuntimeException $e) {
             $this->logger->error('Deserialization failed: ' . $e->getMessage());
             throw new QueueException('Decode failed, probably a malformed data was put into queue, or upgrade from older version was performed', 0, $e);
         }
+    }
+
+    private function stripPrefixFromKey(string $key)
+    {
+        return substr($key, strlen($this->getPrefix()));
     }
 
     /**
@@ -93,7 +108,11 @@ class RedisQueue implements QueueInterface
      */
     public function push(MessageInterface $message)
     {
-        $this->client->set($this->getPrefix() . $message->getId(), $this->encode($message));
+        $key = $this->getPrefix() . $message->getId();
+
+        $this->logger->info('[Redis] Adding ' . $key);
+        $this->client->set($key, $this->encode($message));
+
         return true;
     }
 
@@ -105,9 +124,8 @@ class RedisQueue implements QueueInterface
         $items = $this->client->keys($this->getPrefix() . '*');
 
         return array_map(function ($item) {
-
             try {
-                return $this->decode($this->client->get($item));
+                return $this->decode($this->client->get($item), $item);
             }
             catch (QueueException $e) {
                 $this->logger->error('Got error while decoding item. ' . $e->getMessage() . ', content: ' . $item);
@@ -131,7 +149,11 @@ class RedisQueue implements QueueInterface
      */
     public function popOutById(string $id)
     {
-        $this->client->del([$this->getPrefix() . str_replace($this->getPrefix(), '', $id)]);
+        $key = $this->getPrefix() . str_replace($this->getPrefix(), '', $id);
+
+        $this->logger->info('[Redis] Deleting ' . $key);
+        $this->client->del([$key]);
+
         return true;
     }
 }
