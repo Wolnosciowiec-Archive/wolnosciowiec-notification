@@ -9,6 +9,12 @@ php:
   - '7.0'
   - '7.1'
   - nightly
+  - hhvm
+
+matrix:
+    allow_failures:
+        - php: hhvm
+        - php: nightly
 
 env:
   - SYMFONY_VERSION="3.0.*" DB=mysql
