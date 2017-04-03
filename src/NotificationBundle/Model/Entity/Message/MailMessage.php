@@ -5,13 +5,13 @@ namespace NotificationBundle\Model\Entity\Message;
 class MailMessage extends Message implements MailMessageInterface
 {
     /** @var string $subject */
-    private $subject = '';
+    protected $subject = '';
 
     /** @var string $from */
-    private $from = '';
+    protected $from = '';
 
     /** @var array $recipients */
-    private $recipients = [];
+    protected $recipients = [];
 
     /**
      * @return string

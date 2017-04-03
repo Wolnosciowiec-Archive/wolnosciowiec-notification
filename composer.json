@@ -32,8 +32,9 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0",
-        "maknz/slack": "^1.7"
+        "symfony/phpunit-bridge": "^3.2",
+        "maknz/slack": "^1.7",
+        "phpunit/phpunit": "5.*"
     },
     "scripts": {
         "symfony-scripts": [
@@ -44,13 +45,14 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
         "post-install-cmd": [
+            "composer dump-autoload -o",
             "@symfony-scripts",
             "php bin/console cache:clear --env=prod",
             "php ./bin/console doctrine:database:create -n -e prod 2>/dev/null || true",
-            "php ./bin/console doctrine:migrations:migrate -n -e prod",
-            "composer dump-autoload -o"
+            "php ./bin/console doctrine:migrations:migrate -n -e prod"
         ],
         "post-update-cmd": [
+            "composer dump-autoload -o",
             "@symfony-scripts"
         ]
     },

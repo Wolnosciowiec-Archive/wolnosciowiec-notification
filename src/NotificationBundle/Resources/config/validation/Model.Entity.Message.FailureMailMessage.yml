@@ -1,4 +1,4 @@
-NotificationBundle\Model\Entity\Message\Message\FailureMailMessage:
+NotificationBundle\Model\Entity\Message\FailureMailMessage:
     properties:
         serviceName:
             - NotBlank:
@@ -29,3 +29,4 @@ NotificationBundle\Model\Entity\Message\Message\FailureMailMessage:
                 max: 512
                 minMessage: "exception_message_length_1_to_512"
                 maxMessage: "exception_message_length_1_to_512"
+

@@ -41,16 +41,6 @@ class NewMessageValidatorTest extends TestCase
                 '',
             ],
 
-            'Message group not supported' => [
-                [
-                    'group_name' => 'new_post',
-                ],
-                'Message',
-                false,
-                'invalid_group_name',
-                'Message group not supported',
-            ],
-
             'Missing basic parameters' => [
                 [
                     'content' => null,
@@ -94,9 +84,9 @@ class NewMessageValidatorTest extends TestCase
     {
         $result = $this->getValidator()->validate($data, $messageType);
 
-        $this->assertSame($expectedState,   $result->isSuccess());
         $this->assertSame($expectedMessage, $result->getMessage());
         $this->assertSame($expectedReason,  $result->getReason());
+        $this->assertSame($expectedState,   $result->isSuccess());
     }
 
     /**

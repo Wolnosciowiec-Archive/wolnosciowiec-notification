@@ -13,27 +13,27 @@ class Message extends AutoSerializable implements MessageInterface
     /**
      * @var string $content
      */
-    private $content = '';
+    protected $content = '';
 
     /**
      * @var null|string $id
      */
-    private $id = null;
+    protected $id = null;
 
     /**
      * @var string|null $groupName
      */
-    private $groupName = null;
+    protected $groupName = null;
 
     /**
      * @var bool $couldBeTruncated
      */
-    private $couldBeTruncated = true;
+    protected $couldBeTruncated = true;
 
     /**
      * @var string $title
      */
-    private $title = '';
+    protected $title = '';
 
     /**
      * @param string $content

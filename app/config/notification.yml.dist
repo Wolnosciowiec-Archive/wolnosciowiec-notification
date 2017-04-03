@@ -8,7 +8,7 @@ notification:
     allowed_entities:
         Message: "NotificationBundle\\Model\\Entity\\Message\\Message"
         Mail: "NotificationBundle\\Model\\Entity\\Message\\MailMessage"
-        Failure: "NotificationBundle\\Model\\Entity\\Message\\FailureMailMessage"
+        Exception: "NotificationBundle\\Model\\Entity\\Message\\FailureMailMessage"
         Slack: "NotificationBundle\\Model\\Entity\\Message\\SlackMessage"
 
     enabled_messengers:

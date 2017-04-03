@@ -1,0 +1,12 @@
+NotificationBundle\Model\Entity\Message\Message:
+    properties:
+        groupName:
+            - NotBlank:
+                message: "group_name_required"
+
+        title:
+            - Length:
+                min: 0
+                max: 128
+                minMessage: "title_is_too_short"
+                maxMessage: "title_is_too_long"

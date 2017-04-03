@@ -9,22 +9,22 @@ use NotificationBundle\Model\Entity\WithRendererInterface;
 class FailureMailMessage extends MailMessage implements WithRendererInterface
 {
     /** @var string $serviceName */
-    private $serviceName;
+    protected $serviceName;
 
     /** @var string $requestString */
-    private $requestString;
+    protected $requestString;
 
     /** @var string[] $trace */
-    private $trace = [];
+    protected $trace = [];
 
     /** @var string $filePath */
-    private $filePath = '';
+    protected $filePath = '';
 
     /** @var int $fileLine */
-    private $fileLine = 0;
+    protected $fileLine = 0;
 
     /** @var string $exceptionMessage */
-    private $exceptionMessage = '';
+    protected $exceptionMessage = '';
 
     /**
      * @inheritdoc
