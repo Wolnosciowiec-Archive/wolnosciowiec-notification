@@ -45,7 +45,7 @@ class QueueProcessor
         /** @var MessageInterface[] $messages */
         $messages = array_filter($this->factory->getQueue()->findAll());
 
-        $results = $this->sender->send($messages);
+        $results = $this->sender->sendMultiple($messages);
         $this->cleaner->clearProcessedMessages($results);
 
         return $results;

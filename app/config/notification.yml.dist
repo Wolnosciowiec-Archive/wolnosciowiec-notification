@@ -2,33 +2,46 @@ notification:
     queue: "notificationbundle.queue.redis"
     queue_parameters:
         scheme: tcp
-        host: localhost
+        host: cache_server
         port: 6379
 
     allowed_entities:
-        Message: "NotificationBundle\\Model\\Entity\\Message"
-        Exception: "NotificationBundle\\Model\\Entity\\FailureMailMessage"
-        MailMessage: "NotificationBundle\\Model\\Entity\\MailMessage"
+        Message: "NotificationBundle\\Model\\Entity\\Message\\Message"
+        Mail: "NotificationBundle\\Model\\Entity\\Message\\MailMessage"
+        Failure: "NotificationBundle\\Model\\Entity\\Message\\FailureMailMessage"
+        Slack: "NotificationBundle\\Model\\Entity\\Message\\SlackMessage"
 
     enabled_messengers:
-        "notificationbundle.messenger.twitter":
+        twitter:
+            service_id: notificationbundle.messenger.twitter
             class: NotificationBundle\Messenger\TwitterMessenger
             groups:
-                - short_content_update_notification
+                - portal_content_publishing
+                - twitter
+            config:
+                consumer_key: xxx
+                consumer_secret: xxx
+                access_token: yyy
+                access_token_secret: yyy
 
-        "notificationbundle.messenger.email":
+        email:
+            service_id: notificationbundle.messenger.email
             class: NotificationBundle\Messenger\EmailMessenger
             groups:
-                - exception
+                - application_failure_reporting
                 - email
+            config:
+                default_from: xxx
+                default_recipients:
+                    - yyy
 
-    messengers:
-        twitter:
-            consumer_key: aaa
-            consumer_secret: bbb
-            access_token: ccc
-            access_token_secret: ddd
+        slack:
+            service_id: notificationbundle.messenger.slack
+            class: NotificationBundle\Messenger\SlackMessenger
+            groups:
+                - application_failure_reporting
+                - portal_content_publishing
+                - slack
+            config:
+                hook_url: xxx
 
-        facebook:
-            app_id: xxx
-            app_secret: yyy

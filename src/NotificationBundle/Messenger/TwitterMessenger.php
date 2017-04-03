@@ -3,13 +3,9 @@
 namespace NotificationBundle\Messenger;
 
 use NotificationBundle\Model\Entity\MessageInterface;
-use NotificationBundle\Services\ConfigurationProvider\MessengerConfigurationProvider;
 use Psr\Log\LoggerInterface;
 
-/**
- * @package NotificationBundle\Messenger
- */
-class TwitterMessenger implements MessengerInterface
+class TwitterMessenger extends BaseMessenger implements MessengerInterface
 {
     /** @var \Twitter $client */
     private $client;
@@ -18,19 +14,20 @@ class TwitterMessenger implements MessengerInterface
     private $logger;
 
     /**
-     * @param MessengerConfigurationProvider $configurationProvider
-     * @param LoggerInterface                $logger
+     * @param LoggerInterface $logger
      */
-    public function __construct(
-        MessengerConfigurationProvider $configurationProvider,
-        LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
+    }
+
+    public function reconfigure()
+    {
         $this->client = new \Twitter(
-            $configurationProvider->get('consumer_key', 'twitter'),
-            $configurationProvider->get('consumer_secret', 'twitter'),
-            $configurationProvider->get('access_token', 'twitter'),
-            $configurationProvider->get('access_token_secret', 'twitter')
+            $this->getConfig()->get('consumer_key'),
+            $this->getConfig()->get('consumer_secret'),
+            $this->getConfig()->get('access_token'),
+            $this->getConfig()->get('access_token_secret')
         );
     }
 
@@ -63,8 +60,8 @@ class TwitterMessenger implements MessengerInterface
 
         try {
             $this->client->send($content);
-        }
-        catch (\TwitterException $e) {
+
+        }  catch (\TwitterException $e) {
             $this->logger->error(
                 'Got \\TwitterException: "' . $e->getMessage() .
                 '", message id=' . $message->getId());

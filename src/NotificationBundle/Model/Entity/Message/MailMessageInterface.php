@@ -1,9 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace NotificationBundle\Model\Entity;
+namespace NotificationBundle\Model\Entity\Message;
+use NotificationBundle\Model\Entity\MessageInterface;
 
 /**
- * @package NotificationBundle\Model\Entity
+ * @package NotificationBundle\Model\Entity\Message\Message
  */
 interface MailMessageInterface extends MessageInterface
 {

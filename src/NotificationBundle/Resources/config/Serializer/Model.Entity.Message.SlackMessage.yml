@@ -1,0 +1,14 @@
+NotificationBundle\Model\Entity\Message\SlackMessage:
+    exclusion_policy: none
+    properties:
+        icon:
+            type: string
+
+        channelName:
+            type: string
+
+        username:
+            type: string
+
+        allowMarkdown:
+            type: boolean

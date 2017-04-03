@@ -1,6 +1,7 @@
 <?php
 
 namespace NotificationBundle\Queue;
+
 use NotificationBundle\Model\Entity\MessageInterface;
 
 /**

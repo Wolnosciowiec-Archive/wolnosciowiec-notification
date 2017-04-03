@@ -1,8 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace NotificationBundle\Factory\Messenger;
 
 use NotificationBundle\Messenger\MessengerInterface;
+use NotificationBundle\Services\ConfigurationProvider\MessengerConfiguration;
 
 /**
  * @package NotificationBundle\Factory\Messenger
@@ -28,7 +29,20 @@ class MessengerFactory
      */
     public function setServices($services)
     {
-        $this->services = $services;
+        $constructed = [];
+
+        foreach ($services as $service) {
+            /**
+             * @var MessengerInterface $instance
+             */
+            $instance = $service[0];
+            $config = new MessengerConfiguration($service[1]);
+
+            $instance->setConfiguration($config);
+            $constructed[] = $instance;
+        }
+
+        $this->services = $constructed;
         return $this;
     }
 }

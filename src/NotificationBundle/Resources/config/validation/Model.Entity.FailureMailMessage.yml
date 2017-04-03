@@ -1,4 +1,4 @@
-NotificationBundle\Model\Entity\FailureMailMessage:
+NotificationBundle\Model\Entity\Message\Message\FailureMailMessage:
     properties:
         serviceName:
             - NotBlank:

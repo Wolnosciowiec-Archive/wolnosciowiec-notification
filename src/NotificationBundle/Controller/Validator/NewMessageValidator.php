@@ -8,7 +8,6 @@ use NotificationBundle\Model\Entity\Exception\InvalidMessageGroupException;
 use NotificationBundle\Model\Entity\Exception\InvalidMessageTypeException;
 use NotificationBundle\Model\Entity\MessageInterface;
 use NotificationBundle\Model\Entity\Result\ValidationResult;
-use NotificationBundle\Services\ConfigurationProvider\MessengerConfigurationProvider;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -23,27 +22,21 @@ class NewMessageValidator
     /** @var MessageFactory $factory */
     private $factory;
 
-    /** @var MessengerConfigurationProvider $messengerConf */
-    private $messengerConf;
-
     /** @var ValidatorInterface $validator */
     private $validator;
 
     /**
      * @param MessageFactory                 $factory
      * @param LoggerInterface                $logger
-     * @param MessengerConfigurationProvider $messengerConfiguration
      * @param ValidatorInterface             $validator
      */
     public function __construct(
         MessageFactory $factory,
         LoggerInterface $logger,
-        MessengerConfigurationProvider $messengerConfiguration,
         ValidatorInterface $validator
     ) {
         $this->factory       = $factory;
         $this->logger        = $logger;
-        $this->messengerConf = $messengerConfiguration;
         $this->validator     = $validator;
     }
 
@@ -109,17 +102,8 @@ class NewMessageValidator
      *
      * @return bool
      */
-    public function validateMessage(MessageInterface $message): bool
+    public function validateMessage($message): bool
     {
-        if ($message->getGroupName() === null
-            || $message->getContent() === null) {
-            $this->logger->error('Invalid data object in request, missing required fields');
-
-            throw new IncompleteMessageParametersException(
-                'Missing "group_name" or "content" fields. ' .
-                'Check documentation for input "message_type"');
-        }
-
         // @codeCoverageIgnoreStart
         if (!$message instanceof MessageInterface) {
             $this->logger->critical(
@@ -130,17 +114,13 @@ class NewMessageValidator
         }
         // @codeCoverageIgnoreEnd
 
-        $foundGroup = false;
+        if ($message->getGroupName() === null
+            || $message->getContent() === null) {
+            $this->logger->error('Invalid data object in request, missing required fields');
 
-        foreach ($this->messengerConf->getMessengerGroupsByClass() as $groups) {
-
-            if (in_array($message->getGroupName(), $groups)) {
-                $foundGroup = true;
-            }
-        }
-
-        if ($foundGroup === false) {
-            throw new InvalidMessageGroupException('Message group not supported');
+            throw new IncompleteMessageParametersException(
+                'Missing "group_name" or "content" fields. ' .
+                'Check documentation for input "message_type"');
         }
 
         return true;

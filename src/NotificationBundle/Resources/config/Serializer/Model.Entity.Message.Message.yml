@@ -1,4 +1,4 @@
-NotificationBundle\Model\Entity\Message:
+NotificationBundle\Model\Entity\Message\Message:
     exclusion_policy: none
     properties:
         content:

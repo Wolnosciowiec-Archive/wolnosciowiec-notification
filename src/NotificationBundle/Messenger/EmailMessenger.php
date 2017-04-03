@@ -2,16 +2,15 @@
 
 namespace NotificationBundle\Messenger;
 
-use NotificationBundle\Model\Entity\MailMessageInterface;
+use NotificationBundle\Model\Entity\Message\MailMessageInterface;
 use NotificationBundle\Model\Entity\MessageInterface;
 use NotificationBundle\Model\Entity\WithRendererInterface;
-use NotificationBundle\Services\ConfigurationProvider\MessengerConfigurationProvider;
 use Psr\Log\LoggerInterface;
 
 /**
  * @package NotificationBundle\Factory\Messenger
  */
-class EmailMessenger implements MessengerInterface
+class EmailMessenger extends BaseMessenger implements MessengerInterface
 {
     /**
      * @var \Swift_Mailer $mailer
@@ -24,11 +23,6 @@ class EmailMessenger implements MessengerInterface
     private $twig;
 
     /**
-     * @var MessengerConfigurationProvider $configurationProvider
-     */
-    private $config;
-
-    /**
      * @var LoggerInterface $logger
      */
     private $logger;
@@ -37,18 +31,19 @@ class EmailMessenger implements MessengerInterface
      * @param \Swift_Mailer $mailer
      * @param \Twig_Environment $twig
      * @param LoggerInterface $logger
-     * @param MessengerConfigurationProvider $configurationProvider
      */
     public function __construct(
         \Swift_Mailer     $mailer,
         \Twig_Environment $twig,
-        LoggerInterface   $logger,
-        MessengerConfigurationProvider $configurationProvider
+        LoggerInterface   $logger
     ) {
         $this->mailer = $mailer;
         $this->twig   = $twig;
         $this->logger = $logger;
-        $this->config = $configurationProvider;
+    }
+
+    public function reconfigure()
+    {
     }
 
     /**
@@ -56,7 +51,7 @@ class EmailMessenger implements MessengerInterface
      */
     private function getFromAddress(): string
     {
-        return $this->config->get('default_from', 'email');
+        return $this->getConfig()->get('default_from');
     }
 
     /**
@@ -66,7 +61,7 @@ class EmailMessenger implements MessengerInterface
     private function getRecipients(MailMessageInterface $message) : array
     {
         if (empty($message->getRecipients())) {
-            return $this->config->get('default_recipients', 'email') ?? [];
+            return $this->getConfig()->get('default_recipients', []);
         }
 
         return $message->getRecipients() ?? [];

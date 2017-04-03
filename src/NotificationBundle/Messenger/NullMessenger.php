@@ -7,10 +7,14 @@ use NotificationBundle\Model\Entity\MessageInterface;
 /**
  * @package NotificationBundle\Messenger
  */
-class NullMessenger implements MessengerInterface
+class NullMessenger extends BaseMessenger implements MessengerInterface
 {
     /** @var MessageInterface[] $sentMessages */
     private $sentMessages = [];
+
+    public function reconfigure()
+    {
+    }
 
     /**
      * @param MessageInterface $message
@@ -21,7 +25,6 @@ class NullMessenger implements MessengerInterface
         $this->sentMessages[] = $message;
         return true;
     }
-
     /**
      * @return \NotificationBundle\Model\Entity\MessageInterface[]
      */

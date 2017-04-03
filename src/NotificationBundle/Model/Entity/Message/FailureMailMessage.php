@@ -1,9 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace NotificationBundle\Model\Entity;
+namespace NotificationBundle\Model\Entity\Message;
+use NotificationBundle\Model\Entity\WithRendererInterface;
 
 /**
- * @package NotificationBundle\Model\Entity
+ * @package NotificationBundle\Model\Entity\Message\Message
  */
 class FailureMailMessage extends MailMessage implements WithRendererInterface
 {

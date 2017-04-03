@@ -12,8 +12,6 @@ use Psr\Log\LoggerInterface;
 /**
  * Queue implementation in Redis as a storage
  * ------------------------------------------
- *
- * @package NotificationBundle\Queue
  */
 class RedisQueue implements QueueInterface
 {
@@ -100,7 +98,7 @@ class RedisQueue implements QueueInterface
      */
     private function getPrefix()
     {
-        return 'SocialShare:Queue|';
+        return 'Notification:Queue|';
     }
 
     /**

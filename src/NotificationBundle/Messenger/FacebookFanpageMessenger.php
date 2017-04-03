@@ -5,12 +5,11 @@ namespace NotificationBundle\Messenger;
 use Facebook\Facebook;
 use NotificationBundle\Model\Entity\Exception\InvalidMessengerConfigurationException;
 use NotificationBundle\Model\Entity\MessageInterface;
-use NotificationBundle\Services\ConfigurationProvider\MessengerConfigurationProvider;
 
 /**
  * @package NotificationBundle\Messenger
  */
-class FacebookFanPageMessenger implements MessengerInterface
+class FacebookFanPageMessenger extends BaseMessenger implements MessengerInterface
 {
     /** @var Facebook $client */
     private $client;
@@ -21,21 +20,14 @@ class FacebookFanPageMessenger implements MessengerInterface
     /** @var string $accessToken */
     private $accessToken = '';
 
-    /** @var MessengerConfigurationProvider $conf */
-    private $conf;
-
-    /**
-     * @param MessengerConfigurationProvider $configurationProvider
-     */
-    public function __construct(MessengerConfigurationProvider $configurationProvider)
+    public function reconfigure()
     {
-        $this->conf   = $configurationProvider;
         $this->client = new Facebook([
-            'app_id'     => $configurationProvider->get('app_id', 'facebook'),
-            'app_secret' => $configurationProvider->get('app_secret', 'facebook'),
+            'app_id'     => $this->getConfig()->get('app_id'),
+            'app_secret' => $this->getConfig()->get('app_secret'),
         ]);
 
-        $this->wallId = $configurationProvider->get('wall_id', 'facebook');
+        $this->wallId = $this->getConfig()->get('wall_id');
     }
 
     /**
@@ -49,8 +41,8 @@ class FacebookFanPageMessenger implements MessengerInterface
             $token = explode('access_token=', shell_exec(
                 'curl -s  https://graph.facebook.com/v2.2/oauth/access_token\?grant_type\=client_credentials' .
                 '\&redirect_uri=https://wolnosciowiec.net/oauth/fb' .
-                '\&client_id\=' . $this->conf->get('app_id', 'facebook') .
-                '\&client_secret\=' . $this->conf->get('app_secret', 'facebook')));
+                '\&client_id\=' . $this->getConfig()->get('app_id') .
+                '\&client_secret\=' . $this->getConfig()->get('app_secret')));
 
             $this->accessToken = $token[1];
         }

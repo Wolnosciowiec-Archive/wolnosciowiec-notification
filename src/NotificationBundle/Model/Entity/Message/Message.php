@@ -1,8 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace NotificationBundle\Model\Entity;
+namespace NotificationBundle\Model\Entity\Message;
 
 use NotificationBundle\Model\Entity\Base\AutoSerializable;
+use NotificationBundle\Model\Entity\MessageInterface;
 
 /**
  * @package NotificationBundle\Model\Entity

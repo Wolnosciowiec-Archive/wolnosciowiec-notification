@@ -5,7 +5,6 @@ namespace NotificationBundle\Factory\Message;
 use NotificationBundle\Model\Entity\Exception\IncompleteMessageParametersException;
 use NotificationBundle\Model\Entity\Exception\InvalidMessageTypeException;
 use NotificationBundle\Model\Entity\MessageInterface;
-use NotificationBundle\Services\ConfigurationProvider\MessengerConfigurationProvider;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 

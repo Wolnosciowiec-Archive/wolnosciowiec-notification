@@ -5,8 +5,8 @@ notification:
         second_parameter: 123
 
     allowed_entities:
-        Message: "NotificationBundle\\Model\\Entity\\Message"
-        FailureNotification: "NotificationBundle\\Model\\Entity\\FailureMailMessage"
+        Message: "NotificationBundle\\Model\\Entity\\Message\\Message"
+        FailureNotification: "NotificationBundle\\Model\\Entity\\Message\\Message\\FailureMailMessage"
 
     enabled_messengers:
         "notificationbundle.messenger.null":

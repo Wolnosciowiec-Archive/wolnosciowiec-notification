@@ -27,8 +27,8 @@ class NotificationExtension extends Extension
         $config        = $this->processConfiguration($configuration, $configs);
         $definitions   = [];
 
-        foreach (array_keys($config['enabled_messengers']) as $messenger) {
-            $definitions[] = new Reference(str_replace('@', '', $messenger));
+        foreach ($config['enabled_messengers'] as $messenger) {
+            $definitions[] = [new Reference(str_replace('@', '', $messenger['service_id'])), $messenger];
         }
 
         // push services to the factory so it could serve them to the application
@@ -47,10 +47,6 @@ class NotificationExtension extends Extension
         );
 
         // pass the configuration
-        $container->getDefinition('notificationbundle.services.configuration.messenger')->addMethodCall(
-            'setMessengersConfiguration',
-            [$config['messengers'], $config['enabled_messengers']]
-        );
         $container->getDefinition('notificationbundle.services.configuration.queue')->addMethodCall(
             'setAllConfiguration',
             [$config['queue_parameters']]
