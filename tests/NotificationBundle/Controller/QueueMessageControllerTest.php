@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\SocialShareBundle\Controller;
+namespace Tests\NotificationBundle\Controller;
 
-use Tests\SocialShareBundle\TestCase;
+use Tests\NotificationBundle\TestCase;
 
 /**
  * @see QueueMessageController
- * @package Tests\SocialShareBundle\Controller
+ * @package Tests\NotificationBundle\Controller
  */
 class QueueMessageControllerTest extends TestCase
 {

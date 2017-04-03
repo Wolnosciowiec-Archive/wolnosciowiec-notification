@@ -23,11 +23,12 @@ class MessengerConfiguration
             || !isset($group['groups'])
             || !isset($group['service_id'])
             || !isset($group['config'])
+            || !isset($group['class'])
             || !class_exists($group['class'])
         ) {
 
             throw new InvalidMessengerConfigurationException(
-                $group['class'] . ': Invalid configuration in section notification/enabled_messengers.' .
+                @$group['class'] . ': Invalid configuration in section notification/enabled_messengers.' .
                 ' Missing a valid class, config, service_id or groups. Got "' . json_encode($group) . '"');
         }
 

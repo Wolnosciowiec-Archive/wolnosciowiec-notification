@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\SocialShareBundle\Controller;
+namespace Tests\NotificationBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

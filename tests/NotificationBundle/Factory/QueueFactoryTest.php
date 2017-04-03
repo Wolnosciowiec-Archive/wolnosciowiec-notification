@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\SocialShareBundle\Controller;
+namespace Tests\NotificationBundle\Controller;
 
 use NotificationBundle\Factory\Queue\QueueFactory;
 use NotificationBundle\Queue\QueueInterface;
-use Tests\SocialShareBundle\TestCase;
+use Tests\NotificationBundle\TestCase;
 
 /**
  * @see QueueFactory
- * @package Tests\SocialShareBundle\Controller
+ * @package Tests\NotificationBundle\Controller
  */
 class QueueFactoryTest extends TestCase
 {

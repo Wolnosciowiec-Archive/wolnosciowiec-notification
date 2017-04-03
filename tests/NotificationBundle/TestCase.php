@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\SocialShareBundle;
+namespace Tests\NotificationBundle;
 
 use NotificationBundle\Model\Entity\ApiUser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Base class for tests, provides access to the container
  * ------------------------------------------------------
  *
- * @package Tests\SocialShareBundle
+ * @package Tests\NotificationBundle
  */
 abstract class TestCase extends WebTestCase
 {

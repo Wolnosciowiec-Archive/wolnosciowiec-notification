@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\SocialShareBundle\Controller;
+namespace Tests\NotificationBundle\Controller;
 
 use NotificationBundle\Factory\Messenger\MessengerFactory;
 use NotificationBundle\Messenger\MessengerInterface;
-use Tests\SocialShareBundle\TestCase;
+use Tests\NotificationBundle\TestCase;
 
 /**
  * @see MessengerFactory
- * @package Tests\SocialShareBundle\Controller
+ * @package Tests\NotificationBundle\Controller
  */
 class MessengerFactoryTest extends TestCase
 {

@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 use NotificationBundle\Controller\Validator\NewMessageValidator;
-use Tests\SocialShareBundle\TestCase;
+use Tests\NotificationBundle\TestCase;
 
 /**
  * @see NewMessageValidator
