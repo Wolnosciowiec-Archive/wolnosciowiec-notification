@@ -40,9 +40,10 @@ class NullMessenger extends BaseMessenger implements MessengerInterface
         return true;
     }
     /**
-     * @return \NotificationBundle\Model\Entity\MessageInterface[]
+     * @codeCoverageIgnore
+     * @return MessageInterface[]
      */
-    public function getSentMessages()
+    public function getSentMessages(): array
     {
         return $this->sentMessages;
     }
