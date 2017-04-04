@@ -78,14 +78,26 @@ class MessageSenderService
         }
 
         try {
-            $messenger->send($message);
+            $sendingResult = $messenger->send($message);
+
+            // regular errors, eg. the server does not accept a field of given type
+            if (!$sendingResult) {
+                $result->addFailureCode($message->getId(), SenderErrors::SENDING_FAILURE);
+                $result->markAsDone($message);
+
+                $this->logger->notice('Failed to send message id=' . $message->getId() . ' using ' . get_class($message));
+                return;
+            }
+
             $result->markAsDone($message);
 
             // logging
             $this->logger->info('Message id="' . $message->getId() . '" sent using "' . get_class($messenger) . '"');
 
         } catch (\Exception $e) {
-            $result->addFailureCode($message->getId(), SenderErrors::SENDING_FAILURE);
+
+            // exceptions, are treated as an application failure
+            $result->addFailureCode($message->getId(), SenderErrors::UNEXPECTED_SENDING_FAILURE);
             $result->markAsDone($message);
 
             // logging

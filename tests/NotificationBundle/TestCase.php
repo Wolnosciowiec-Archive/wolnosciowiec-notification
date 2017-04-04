@@ -3,6 +3,7 @@
 namespace Tests\NotificationBundle;
 
 use NotificationBundle\Model\Entity\ApiUser;
+use NotificationBundle\Queue\NullQueue;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -47,5 +48,10 @@ abstract class TestCase extends WebTestCase
         }
 
         return $user;
+    }
+
+    protected function getQueue(): NullQueue
+    {
+        return $this->getContainer()->get('notificationbundle.queue.null');
     }
 }
