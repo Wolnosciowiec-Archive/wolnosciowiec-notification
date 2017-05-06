@@ -20,79 +20,79 @@
 
         "NOTIFY_DB_DRIVER": {
             "description": "Database driver",
-            "default": "pdo_sqlite",
+            "value": "pdo_sqlite",
             "required": true
         },
 
         "NOTIFY_DB_HOST": {
             "description": "Database host name",
-            "default": "127.0.0.1",
+            "value": "127.0.0.1",
             "required": true
         },
 
         "NOTIFY_DB_PORT": {
             "description": "Database connection port",
-            "default": "~",
+            "value": "~",
             "required": true
         },
 
         "NOTIFY_DB_NAME": {
             "description": "Database name",
-            "default": "symfony",
+            "value": "symfony",
             "required": true
         },
 
         "NOTIFY_DB_USER": {
             "description": "Database user name",
-            "default": "root",
+            "value": "root",
             "required": true
         },
 
         "NOTIFY_DB_PASSWORD": {
             "description": "Database password",
-            "default": "~",
+            "value": "~",
             "required": true
         },
 
         "NOTIFY_MAILER_TRANSPORT": {
             "description": "Mailer transport",
-            "default": "smtp",
+            "value": "smtp",
             "required": true
         },
 
         "NOTIFY_MAILER_HOST": {
             "description": "Mailer host",
-            "default": "127.0.0.1",
+            "value": "127.0.0.1",
             "required": true
         },
 
         "NOTIFY_MAILER_PORT": {
             "description": "Mailer port",
-            "default": "25",
+            "value": "25",
             "required": true
         },
 
         "NOTIFY_MAILER_USER": {
             "description": "Mailer user",
-            "default": "root@localhost",
+            "value": "root@localhost",
             "required": true
         },
 
         "NOTIFY_MAILER_PASSWD": {
             "description": "Mailer password",
-            "default": "~",
+            "value": "~",
             "required": true
         },
 
         "NOTIFY_MAILER_ENCRYPTION": {
             "description": "Mailer encryption",
-            "default": "~",
+            "value": "~",
             "required": true
         },
 
         "NOTIFY_MAILER_SENDER_ADDRESS": {
             "description": "Sender address for mailer",
-            "default": "root@localhost",
+            "value": "root@localhost",
             "required": true
         },
 
@@ -104,13 +104,13 @@
 
         "NOTIFY_DEFAULT_API_USER": {
             "description": "Default api username",
-            "default": "apiuser",
+            "value": "apiuser",
             "required": true
         },
 
         "NOTIFY_DEFAULT_API_KEY": {
             "description": "Default api key",
-            "default": "~",
+            "value": "~",
             "required": true
         }
     },
