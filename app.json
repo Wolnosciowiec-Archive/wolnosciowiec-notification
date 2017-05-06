@@ -1,0 +1,124 @@
+{
+    "name": "Wolnosciowiec Notification",
+    "description": "API gateway for sending notifications, with queue support.",
+    "repository": "https://github.com/Wolnosciowiec/wolnosciowiec-notification",
+    "logo": "https://avatars0.githubusercontent.com/u/22785395",
+    "keywords": ["notification", "logging", "monitoring", "exceptions", "new relic"],
+
+    "env": {
+        "NOTIFY_CLOUD": {
+            "description": "Inform the application that it's running in the cloud",
+            "required": true,
+            "generator": "secret"
+        },
+
+        "NOTIFY_TOKEN": {
+            "description": "Secret API authorization token that needs to be passed using 'ww-token' header",
+            "required": true,
+            "generator": "secret"
+        },
+
+        "NOTIFY_DB_DRIVER": {
+            "description": "Database driver",
+            "default": "pdo_sqlite",
+            "required": true
+        },
+
+        "NOTIFY_DB_HOST": {
+            "description": "Database host name",
+            "default": "127.0.0.1",
+            "required": true
+        },
+
+        "NOTIFY_DB_PORT": {
+            "description": "Database connection port",
+            "default": "~",
+            "required": true
+        },
+
+        "NOTIFY_DB_NAME": {
+            "description": "Database name",
+            "default": "symfony",
+            "required": true
+        },
+
+        "NOTIFY_DB_USER": {
+            "description": "Database user name",
+            "default": "root",
+            "required": true
+        },
+
+        "NOTIFY_DB_PASSWORD": {
+            "description": "Database password",
+            "default": "~",
+            "required": true
+        },
+
+        "NOTIFY_MAILER_TRANSPORT": {
+            "description": "Mailer transport",
+            "default": "smtp",
+            "required": true
+        },
+
+        "NOTIFY_MAILER_HOST": {
+            "description": "Mailer host",
+            "default": "127.0.0.1",
+            "required": true
+        },
+
+        "NOTIFY_MAILER_PORT": {
+            "description": "Mailer port",
+            "default": "25",
+            "required": true
+        },
+
+        "NOTIFY_MAILER_USER": {
+            "description": "Mailer user",
+            "default": "root@localhost",
+            "required": true
+        },
+
+        "NOTIFY_MAILER_PASSWD": {
+            "description": "Mailer password",
+            "default": "~",
+            "required": true
+        },
+
+        "NOTIFY_MAILER_ENCRYPTION": {
+            "description": "Mailer encryption",
+            "default": "~",
+            "required": true
+        },
+
+        "NOTIFY_MAILER_SENDER_ADDRESS": {
+            "description": "Sender address for mailer",
+            "default": "root@localhost",
+            "required": true
+        },
+
+        "NOTIFY_SECRET": {
+            "description": "Application secret key",
+            "required": true,
+            "generator": "secret"
+        },
+
+        "NOTIFY_DEFAULT_API_USER": {
+            "description": "Default api username",
+            "default": "apiuser",
+            "required": true
+        },
+
+        "NOTIFY_DEFAULT_API_KEY": {
+            "description": "Default api key",
+            "default": "~",
+            "required": true
+        }
+    },
+
+    "addons": [
+        {
+            "plan": "heroku-redis",
+            "as": "cache_server"
+        }
+    ]
+}

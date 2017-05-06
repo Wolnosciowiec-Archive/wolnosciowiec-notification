@@ -1,0 +1,45 @@
+# This file is used by clouds that does not allow uploading custom files
+# but only the repository + setting the UNIX environment
+#
+parameters:
+    database_driver:   "%env(NOTIFY_DB_DRIVER)%"
+    database_host:     "%env(NOTIFY_DB_HOST)%"
+    database_port:     "%env(NOTIFY_DB_PORT)%"
+    database_name:     "%env(NOTIFY_DB_NAME)%"
+    database_user:     "%env(NOTIFY_DB_USER)%"
+    database_password: "%env(NOTIFY_DB_PASSWORD)%"
+    database_path:     "%kernel.root_dir%/notification.sqlite3"
+
+    mailer_transport:  "%env(NOTIFY_MAILER_TRANSPORT)%"
+    mailer_host:       "%env(NOTIFY_MAILER_HOST)%"
+    mailer_port:       "%env(NOTIFY_MAILER_PORT)%"
+    mailer_user:       "%env(NOTIFY_MAILER_USER)%"
+    mailer_password:   "%env(NOTIFY_MAILER_PASSWD)%"
+    mailer_encryption: "%env(NOTIFY_MAILER_ENCRYPTION)%"
+    mailer_sender_address: "%env(NOTIFY_MAILER_SENDER_ADDRESS)%"
+
+    secret:           "%env(NOTIFY_SECRET)%"
+    default_api_user: "%env(NOTIFY_DEFAULT_API_USER)%"
+    default_api_key:  "%env(NOTIFY_DEFAULT_API_KEY)%"
+
+
+    # defaults
+    env(NOTIFY_DB_DRIVER):   pdo_sqlite
+    env(NOTIFY_DB_HOST):     127.0.0.1
+    env(NOTIFY_DB_PORT):     ~
+    env(NOTIFY_DB_NAME):     symfony
+    env(NOTIFY_DB_USER):     root
+    env(NOTIFY_DB_PASSWORD): ~
+    database_path: "%kernel.root_dir%/notification.sqlite3"
+
+    env(NOTIFY_MAILER_TRANSPORT):  smtp
+    env(NOTIFY_MAILER_HOST):       127.0.0.1
+    env(NOTIFY_MAILER_PORT):       25
+    env(NOTIFY_MAILER_USER):       root@localhost
+    env(NOTIFY_MAILER_PASSWD):   ~
+    env(NOTIFY_MAILER_ENCRYPTION): ~
+    env(NOTIFY_MAILER_SENDER_ADDRESS): root@localhost
+
+    env(NOTIFY_SECRET):           ThisTokenIsNotSoSecretChangeIt
+    env(NOTIFY_DEFAULT_API_USER): apiuser
+    env(NOTIFY_DEFAULT_API_KEY): ~

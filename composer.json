@@ -28,12 +28,12 @@
         "symfony/var-dumper": "^3.2",
         "facebook/graph-sdk": "^5.4",
         "doctrine/doctrine-migrations-bundle": "^1.2",
-        "symfony/swiftmailer-bundle": "^2.5"
+        "symfony/swiftmailer-bundle": "^2.5",
+        "maknz/slack": "^1.7"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.2",
-        "maknz/slack": "^1.7",
         "phpunit/phpunit": "5.*"
     },
     "scripts": {
@@ -45,6 +45,8 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
         "post-install-cmd": [
+            "php -r \"if(getenv('NOTIFY_CLOUD') ?? false && ! is_file('./app/notification.yml')) { file_put_contents('./app/notification.yml', base64_decode(getenv('NOTIFY_CONFIG'))); }\"",
+            "php -r \"if(getenv('NOTIFY_CLOUD') ?? false && ! is_file('./app/parameters.yml')) { system('cp ./app/parameters.yml.cloud.dist ./app/parameters.yml'); }\"",
             "composer dump-autoload -o",
             "@symfony-scripts",
             "php bin/console cache:clear --env=prod",
