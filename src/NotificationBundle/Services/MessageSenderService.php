@@ -71,7 +71,7 @@ class MessageSenderService
             // logging
             $this->logger->info(
                 'Marking message "' . $message->getId() . '" as sent for "' .
-                get_class($messenger) . '" as the group does not match');
+                get_class($messenger) . '" as the group "' . $message->getGroupName() . '" does not match');
 
             $result->markAsDone($message, true);
             return;

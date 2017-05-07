@@ -9,9 +9,9 @@ use NotificationBundle\Services\ConfigurationProvider\MessengerConfiguration;
 abstract class BaseMessenger implements MessengerInterface
 {
     /**
-     * @var string $_configuration
+     * @var MessengerConfiguration $_configuration
      */
-    private $_configuration = '';
+    private $_configuration;
 
     /**
      * @var \Twig_Environment $twig
