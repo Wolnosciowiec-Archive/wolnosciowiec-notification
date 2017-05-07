@@ -2,6 +2,7 @@ services:
     # Factories
     notificationbundle.factory.messenger:
         class: NotificationBundle\Factory\Messenger\MessengerFactory
+        shared: true
 
     notificationbundle.factory.queue:
         class: NotificationBundle\Factory\Queue\QueueFactory

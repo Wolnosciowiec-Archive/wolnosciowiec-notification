@@ -35,7 +35,7 @@ class MessengerFactory
             /**
              * @var MessengerInterface $instance
              */
-            $instance = $service[0];
+            $instance = clone $service[0];
             $config = new MessengerConfiguration($service[1]);
 
             $instance->setConfiguration($config);
