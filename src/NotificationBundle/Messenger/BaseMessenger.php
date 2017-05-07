@@ -2,11 +2,21 @@
 
 namespace NotificationBundle\Messenger;
 
+use NotificationBundle\Model\Entity\MessageInterface;
+use NotificationBundle\Model\Entity\WithRendererInterface;
 use NotificationBundle\Services\ConfigurationProvider\MessengerConfiguration;
 
 abstract class BaseMessenger implements MessengerInterface
 {
+    /**
+     * @var string $_configuration
+     */
     private $_configuration = '';
+
+    /**
+     * @var \Twig_Environment $twig
+     */
+    protected $twig;
 
     public function setConfiguration(MessengerConfiguration $configuration): MessengerInterface
     {
@@ -24,5 +34,25 @@ abstract class BaseMessenger implements MessengerInterface
     public function getConfig(): MessengerConfiguration
     {
         return $this->_configuration;
+    }
+
+    /**
+     * Render the message using Twig if the message
+     * implements WithRendererInterface
+     *
+     * @param MessageInterface $message
+     * @return string
+     */
+    protected function renderMessage(MessageInterface $message)
+    {
+        if ($message instanceof WithRendererInterface
+            && $this->twig instanceof \Twig_Environment) {
+            return $this->twig->render(
+                $message->getTemplateName(),
+                ['message' => $message]
+            );
+        }
+
+        return $message->getContent();
     }
 }

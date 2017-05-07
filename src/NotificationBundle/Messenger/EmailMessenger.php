@@ -15,17 +15,17 @@ class EmailMessenger extends BaseMessenger implements MessengerInterface
     /**
      * @var \Swift_Mailer $mailer
      */
-    private $mailer;
+    protected $mailer;
 
     /**
      * @var \Twig_Environment $twig
      */
-    private $twig;
+    protected $twig;
 
     /**
      * @var LoggerInterface $logger
      */
-    private $logger;
+    protected $logger;
 
     /**
      * @param \Swift_Mailer $mailer
@@ -65,25 +65,6 @@ class EmailMessenger extends BaseMessenger implements MessengerInterface
         }
 
         return $message->getRecipients() ?? [];
-    }
-
-    /**
-     * Render the message using Twig if the message
-     * implements WithRendererInterface
-     *
-     * @param MailMessageInterface $message
-     * @return string
-     */
-    private function renderMessage(MailMessageInterface $message)
-    {
-        if ($message instanceof WithRendererInterface) {
-            return $this->twig->render(
-                $message->getTemplateName(),
-                ['message' => $message]
-            );
-        }
-
-        return $message->getContent();
     }
 
     /**

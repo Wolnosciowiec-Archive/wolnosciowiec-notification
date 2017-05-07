@@ -31,4 +31,4 @@ install:
   - composer install
 
 script:
-  - ./vendor/bin/simple-phpunit
+  - ./vendor/bin/simple-phpunit --coverage-text

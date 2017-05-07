@@ -44,6 +44,7 @@ services:
         class: NotificationBundle\Messenger\SlackMessenger
         arguments:
             logger: "@logger"
+            twig: "@twig"
 
     notificationbundle.messenger.null:
         class: NotificationBundle\Messenger\NullMessenger

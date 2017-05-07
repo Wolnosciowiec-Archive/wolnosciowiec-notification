@@ -2,8 +2,6 @@
 
 namespace NotificationBundle\Model\Entity\Message;
 
-use NotificationBundle\Model\Entity\Message\Message;
-
 class SlackMessage extends Message
 {
     /**
