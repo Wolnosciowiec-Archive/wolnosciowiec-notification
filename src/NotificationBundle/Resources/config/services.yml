@@ -10,16 +10,16 @@ services:
     notificationbundle.factory.message:
         class: NotificationBundle\Factory\Message\MessageFactory
         arguments:
-            serializer: "@serializer"
-            logger:     "@logger"
+            $serializer: "@serializer"
+            $logger:     "@logger"
 
     # Queues
     notificationbundle.queue.redis:
         class: NotificationBundle\Queue\RedisQueue
         arguments:
-            configurationProvider: "@notificationbundle.services.configuration.queue"
-            serializer: "@serializer"
-            logger: "@logger"
+            $configurationProvider: "@notificationbundle.services.configuration.queue"
+            $serializer: "@serializer"
+            $logger: "@logger"
 
     notificationbundle.queue.null:
         class: NotificationBundle\Queue\NullQueue
@@ -29,7 +29,7 @@ services:
     notificationbundle.messenger.twitter:
         class: NotificationBundle\Messenger\TwitterMessenger
         arguments:
-            logger:                "@logger"
+            $logger: "@logger"
 
     notificationbundle.messenger.facebook:
         class: NotificationBundle\Messenger\FacebookFanPageMessenger
@@ -37,15 +37,15 @@ services:
     notificationbundle.messenger.email:
         class: NotificationBundle\Messenger\EmailMessenger
         arguments:
-            mailer: "@swiftmailer.mailer"
-            twig: "@twig"
-            logger: "@logger"
+            $mailer: "@swiftmailer.mailer"
+            $twig: "@twig"
+            $logger: "@logger"
 
     notificationbundle.messenger.slack:
         class: NotificationBundle\Messenger\SlackMessenger
         arguments:
-            logger: "@logger"
-            twig: "@twig"
+            $logger: "@logger"
+            $twig: "@twig"
 
     notificationbundle.messenger.null:
         class: NotificationBundle\Messenger\NullMessenger
@@ -54,16 +54,16 @@ services:
     notificationbundle.validator.message:
         class: NotificationBundle\Controller\Validator\NewMessageValidator
         arguments:
-            factory: "@notificationbundle.factory.message"
-            logger:  "@logger"
-            validator: "@validator"
+            $factory: "@notificationbundle.factory.message"
+            $logger:  "@logger"
+            $validator: "@validator"
 
     # Services
     notificationbundle.services.sender:
         class: NotificationBundle\Services\MessageSenderService
         arguments:
-            factory: "@notificationbundle.factory.messenger"
-            logger: "@logger"
+            $factory: "@notificationbundle.factory.messenger"
+            $logger: "@logger"
 
     notificationbundle.services.configuration.queue:
         class: NotificationBundle\Services\ConfigurationProvider\QueueConfigurationProvider
@@ -71,15 +71,15 @@ services:
     notificationbundle.services.cleaner.queue:
         class: NotificationBundle\Services\QueueCleanerService
         arguments:
-            factory: "@notificationbundle.factory.queue"
-            logger: "@logger"
+            $factory: "@notificationbundle.factory.queue"
+            $logger: "@logger"
 
     notificationbundle.services.processor.queue:
         class: NotificationBundle\Services\Processor\QueueProcessor
         arguments:
-            sender: "@notificationbundle.services.sender"
-            cleaner: "@notificationbundle.services.cleaner.queue"
-            factory: "@notificationbundle.factory.queue"
+            $sender: "@notificationbundle.services.sender"
+            $cleaner: "@notificationbundle.services.cleaner.queue"
+            $factory: "@notificationbundle.factory.queue"
 
 
     # Security
@@ -89,4 +89,4 @@ services:
     notificationbundle.security.user_provider:
         class: NotificationBundle\Security\UserProvider
         arguments:
-            em: "@doctrine.orm.entity_manager"
+            $em: "@doctrine.orm.entity_manager"
