@@ -1,0 +1,41 @@
+notification:
+    queue: "notificationbundle.queue.redis"
+    queue_parameters:
+        scheme: tcp
+        host: {{ REDIS_HOST }}
+        port: {{ REDIS_PORT }}
+
+    allowed_entities:
+        Message: "NotificationBundle\\Model\\Entity\\Message\\Message"
+        Mail: "NotificationBundle\\Model\\Entity\\Message\\MailMessage"
+        Exception: "NotificationBundle\\Model\\Entity\\Message\\FailureMailMessage"
+        Slack: "NotificationBundle\\Model\\Entity\\Message\\SlackMessage"
+
+    enabled_messengers:
+        {% if ENABLE_TWITTER is defined and ENABLE_TWITTER == "1" %}twitter:
+            service_id: notificationbundle.messenger.twitter
+            class: NotificationBundle\Messenger\TwitterMessenger
+            groups: {{ TWITTER_GROUPS }}
+            config:
+                consumer_key: {{ TWITTER_CONSUMER_KEY }}
+                consumer_secret: {{ TWITTER_SECRET }}
+                access_token: {{ TWITTER_ACCESS_TOKEN }}
+                access_token_secret: {{ TWITTER_TOKEN_SECRET }}
+        {% endif %}
+
+        {% if ENABLE_EMAIL is defined and ENABLE_MAIL == "1" %}email:
+            service_id: notificationbundle.messenger.email
+            class: NotificationBundle\Messenger\EmailMessenger
+            groups: {{ EMAIL_GROUPS }}
+            config:
+                default_from: {{ EMAIL_DEFAULT_FROM }}
+                default_recipients: {{ EMAIL_DEFAULT_RECIPIENTS }}
+        {% endif %}
+
+        {% if ENABLE_SLACK is defined and ENABLE_SLACK == "1" %}slack:
+            service_id: notificationbundle.messenger.slack
+            class: NotificationBundle\Messenger\SlackMessenger
+            groups: {{ SLACK_GROUPS }}
+            config:
+                hook_url: {{ SLACK_HOOK_URL }}
+        {% endif %}

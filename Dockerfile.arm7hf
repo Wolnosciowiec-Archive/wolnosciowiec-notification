@@ -20,6 +20,24 @@ ENV NOTIFY_SECRET "app-secret-here"
 ENV NOTIFY_DEFAULT_API_USER "apiuser"
 ENV NOTIFY_DEFAULT_API_KEY "default-api-key"
 
+# notification.yml
+ENV REDIS_HOST notification_storage
+ENV REDIS_PORT 6379
+ENV ENABLE_TWITTER 0
+ENV TWITTER_GROUPS "['publish_short_news']"
+ENV TWITTER_CONSUMER_KEY "1234"
+ENV TWITTER_SECRET "56789"
+ENV TWITTER_ACCESS_TOKEN "YOURACCESSTOKENEHERE"
+ENV TWITTER_TOKEN_SECRET "YOURTOKENSECRETHERE"
+ENV ENABLE_EMAIL 1
+ENV EMAIL_GROUPS "['error_report']"
+ENV EMAIL_DEFAULT_FROM "anarchist-report@localhost"
+ENV EMAIL_DEFAULT_RECIPIENTS "root@localhost"
+ENV ENABLE_SLACK 0
+ENV SLACK_GROUPS "['error_report']"
+ENV SLACK_HOOK_URL "http://slackhookurl...something"
+
+ADD ./docker-entrypoint.sh /docker-entrypoint.sh
 ADD . /var/www/html
 
 RUN [ "cross-build-start" ]
@@ -29,3 +47,5 @@ RUN cd /var/www/html \
     && chown www-data:www-data ./ -R \
     && make deploy
 RUN [ "cross-build-end" ]
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
