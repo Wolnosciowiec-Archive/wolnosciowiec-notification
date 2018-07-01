@@ -27,7 +27,6 @@ before-install:
 
 install:
   - cp app/config/notification.yml.dist app/config/notification.yml
-  - cp app/config/parameters.yml.dist app/config/parameters.yml
   - composer install
 
 script:

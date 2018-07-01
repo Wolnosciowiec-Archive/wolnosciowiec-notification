@@ -96,7 +96,7 @@ GET /message/queue/process
 1. Use `wolnosciowiec/wolnosciowiec-notification` image as your base image, extend it by adding a configuration file "notification.yml" to the `app/config` directory.
 The image is exposing 9000 and 80 port, the first is for PHP-FPM 7.x and the second from configured nginx.
 
-2. Configure rest of things with environment variables, or override parameters.yml in docker
+2. Configure rest of things with environment variables
 
 [See the list of env variables](./Dockerfile.x86_64)
 
