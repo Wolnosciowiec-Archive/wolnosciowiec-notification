@@ -90,3 +90,11 @@ POST /message/queue/add?message_type=Message
 ```
 GET /message/queue/process
 ```
+
+## Docker
+
+Use `wolnosciowiec/wolnosciowiec-notification` image as your base image, extend it by adding a configuration file "notification.yml" to the `app/config` directory.
+The image is exposing 9000 and 80 port, the first is for PHP-FPM 7.x and the second from configured nginx.
+
+You can attach a single redis instance as a storage, then scale notifications service with [Docker Swarm](https://docs.docker.com/engine/swarm/) or [Kubernetes](https://kubernetes.io) easily.
+Accessibility of nginx in a container gives ability to use service discovery such as [Traefik](https://traefik.io/).
