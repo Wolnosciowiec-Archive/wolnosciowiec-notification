@@ -2,6 +2,10 @@ Wolnościowiec Notification
 ==========================
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Wolnosciowiec/wolnosciowiec-notification)
+[![Docker Build Status](https://img.shields.io/docker/build/wolnosciowiec/wolnosciowiec-notification.svg)](https://hub.docker.com/r/wolnosciowiec/wolnosciowiec-notification)
+[![MicroBadger Layers](https://img.shields.io/microbadger/layers/wolnosciowiec/wolnosciowiec-notification.svg)](https://github.com/Wolnosciowiec/wolnosciowiec-notification)
+
+
 
 API gateway for sending notifications, with queue support.
 
