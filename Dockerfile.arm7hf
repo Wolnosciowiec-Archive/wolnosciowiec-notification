@@ -3,6 +3,23 @@ FROM wolnosciowiec/docker-php-app:arm7hf
 ENV APP_ENV "prod"
 ENV DATABASE_URL "sqlite:///%kernel.project_dir%/var/data.db"
 
+ENV NOTIFY_DB_DRIVER "pdo_sqlite"
+ENV NOTIFY_DB_HOST "db"
+ENV NOTIFY_DB_PORT "~"
+ENV NOTIFY_DB_NAME "notification"
+ENV NOTIFY_DB_USER "root"
+ENV NOTIFY_DB_PASSWORD ""
+ENV NOTIFY_MAILER_TRANSPORT "smtp"
+ENV NOTIFY_MAILER_HOST "mail"
+ENV NOTIFY_MAILER_PORT "25"
+ENV NOTIFY_MAILER_USER "root@notification"
+ENV NOTIFY_MAILER_PASSWD ""
+ENV NOTIFY_MAILER_ENCRYPTION ""
+ENV NOTIFY_MAILER_SENDER_ADDRESS ""
+ENV NOTIFY_SECRET "app-secret-here"
+ENV NOTIFY_DEFAULT_API_USER "apiuser"
+ENV NOTIFY_DEFAULT_API_KEY "default-api-key"
+
 ADD . /var/www/html
 
 RUN [ "cross-build-start" ]
