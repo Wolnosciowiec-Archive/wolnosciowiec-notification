@@ -55,4 +55,4 @@ docker_image:
 
 ## Docker image for arm7hf architecture
 docker_image@arm7hf:
-	sudo docker build -f ./Dockerfile.arm7hf . -t wolnosciowiec/wolnosciowiec-notification
+	sudo docker build -f ./Dockerfile.arm7hf . -t wolnosciowiec/wolnosciowiec-notification:arm7hf
