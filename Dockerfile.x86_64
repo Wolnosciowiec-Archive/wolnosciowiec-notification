@@ -1,42 +1,38 @@
 FROM wolnosciowiec/docker-php-app
 
-ENV APP_ENV "prod"
-ENV DATABASE_URL "sqlite:///%kernel.project_dir%/var/data.db"
-
-# parameters.php
-ENV NOTIFY_DB_DRIVER "pdo_sqlite"
-ENV NOTIFY_DB_HOST "db"
-ENV NOTIFY_DB_PORT "~"
-ENV NOTIFY_DB_NAME "notification"
-ENV NOTIFY_DB_USER "root"
-ENV NOTIFY_DB_PASSWORD ""
-ENV NOTIFY_MAILER_TRANSPORT "smtp"
-ENV NOTIFY_MAILER_HOST "mail"
-ENV NOTIFY_MAILER_PORT "25"
-ENV NOTIFY_MAILER_USER "root@notification"
-ENV NOTIFY_MAILER_PASSWD ""
-ENV NOTIFY_MAILER_ENCRYPTION "tls"
-ENV NOTIFY_MAILER_SENDER_ADDRESS ""
-ENV NOTIFY_SECRET "app-secret-here"
-ENV NOTIFY_DEFAULT_API_USER "apiuser"
-ENV NOTIFY_DEFAULT_API_KEY "default-api-key"
-
-# notification.yml
-ENV REDIS_HOST notification_storage
-ENV REDIS_PORT 6379
-ENV ENABLE_TWITTER 0
-ENV TWITTER_GROUPS "['publish_short_news']"
-ENV TWITTER_CONSUMER_KEY "1234"
-ENV TWITTER_SECRET "56789"
-ENV TWITTER_ACCESS_TOKEN "YOURACCESSTOKENEHERE"
-ENV TWITTER_TOKEN_SECRET "YOURTOKENSECRETHERE"
-ENV ENABLE_EMAIL 1
-ENV EMAIL_GROUPS "['error_report']"
-ENV EMAIL_DEFAULT_FROM "anarchist-report@localhost"
-ENV EMAIL_DEFAULT_RECIPIENTS "root@localhost"
-ENV ENABLE_SLACK 0
-ENV SLACK_GROUPS "['error_report']"
-ENV SLACK_HOOK_URL "http://slackhookurl...something"
+ENV APP_ENV="prod" \
+    DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db" \
+    NOTIFY_DB_DRIVER="pdo_sqlite" \
+    NOTIFY_DB_HOST="db" \
+    NOTIFY_DB_PORT="~" \
+    NOTIFY_DB_NAME="notification" \
+    NOTIFY_DB_USER="root" \
+    NOTIFY_DB_PASSWORD="" \
+    NOTIFY_MAILER_TRANSPORT="smtp" \
+    NOTIFY_MAILER_HOST="mail" \
+    NOTIFY_MAILER_PORT="25" \
+    NOTIFY_MAILER_USER="root@notification" \
+    NOTIFY_MAILER_PASSWD="" \
+    NOTIFY_MAILER_ENCRYPTION="tls" \
+    NOTIFY_MAILER_SENDER_ADDRESS="" \
+    NOTIFY_SECRET="app-secret-here" \
+    NOTIFY_DEFAULT_API_USER="apiuser" \
+    NOTIFY_DEFAULT_API_KEY="default-api-key" \
+    REDIS_HOST=notification_storage \
+    REDIS_PORT=6379 \
+    ENABLE_TWITTER=0 \
+    TWITTER_GROUPS="['publish_short_news']" \
+    TWITTER_CONSUMER_KEY="1234" \
+    TWITTER_SECRET="56789" \
+    TWITTER_ACCESS_TOKEN="YOURACCESSTOKENEHERE" \
+    TWITTER_TOKEN_SECRET="YOURTOKENSECRETHERE" \
+    ENABLE_EMAIL=1 \
+    EMAIL_GROUPS="['error_report']" \
+    EMAIL_DEFAULT_FROM="anarchist-report@localhost" \
+    EMAIL_DEFAULT_RECIPIENTS="root@localhost" \
+    ENABLE_SLACK=0 \
+    SLACK_GROUPS="['error_report']" \
+    SLACK_HOOK_URL="http://slackhookurl...something"
 
 ADD ./docker-entrypoint.sh /docker-entrypoint.sh
 ADD . /var/www/html
@@ -44,7 +40,7 @@ RUN cd /var/www/html \
     && cp ./app/config/notification.yml.dist ./app/config/notification.yml \
     && chown www-data:www-data /var/www/html -R \
     && mv ./web/app.php ./web/index.php \
-    && su www-data -s /bin/bash -c make deploy
+    && su www-data -s /bin/bash -c "make deploy"
 
 RUN chown www-data:www-data /var/www/html -R
 

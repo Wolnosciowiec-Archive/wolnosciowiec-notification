@@ -49,10 +49,18 @@ deploy:
 	make build
 	make migrate
 
-## Docker image for x86_64 architecture
-docker_image:
-	sudo docker build -f ./Dockerfile.x86_64 . -t wolnosciowiec/wolnosciowiec-notification
+## Build x86_64 image
+build@x86_64:
+	sudo docker build . -f ./Dockerfile.x86_64 -t wolnosciowiec/wolnosciowiec-notification
 
-## Docker image for arm7hf architecture
-docker_image@arm7hf:
-	sudo docker build -f ./Dockerfile.arm7hf . -t wolnosciowiec/wolnosciowiec-notification:arm7hf
+## Build arm7hf image
+build@arm7hf:
+	sudo docker build . -f ./Dockerfile.arm7hf -t wolnosciowiec/wolnosciowiec-notification:arm7hf
+
+## Push x86_64 image to registry
+push@x86_64:
+	sudo docker push wolnosciowiec/wolnosciowiec-notification
+
+## Push arm7hf image to registry
+push@arm7hf:
+	sudo docker push wolnosciowiec/wolnosciowiec-notification:arm7hf
