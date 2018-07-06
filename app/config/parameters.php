@@ -7,7 +7,7 @@ if (!function_exists('envOrDefault')) {
             return $_ENV[$envName];
         }
 
-        return isset($_SERVER[$envName]) ? $_SERVER[$envName] : $default;
+        return trim(isset($_SERVER[$envName]) ? $_SERVER[$envName] : $default, '"\'');
     }
 }
 
