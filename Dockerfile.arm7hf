@@ -38,15 +38,7 @@ ADD ./docker-entrypoint.sh /docker-entrypoint.sh
 ADD . /var/www/html
 
 RUN [ "cross-build-start" ]
-
-RUN cd /var/www/html \
-    && cp ./app/config/notification.yml.dist ./app/config/notification.yml \
-    && chown www-data:www-data /var/www/html -R \
-    && mv ./web/app.php ./web/index.php \
-    && su www-data -s /bin/bash -c "make deploy"
-
-RUN chown www-data:www-data /var/www/html -R
-
+RUN make build_docker_image
 RUN [ "cross-build-end" ]
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
