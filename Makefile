@@ -67,6 +67,7 @@ push@arm7hf:
 
 ## Build files inside of a docker image
 build_docker_image:
-	chown www-data:www-data /var/www/html -R
+	cp ./app/config/notification.yml.dist ./app/config/notification.yml
 	cp /var/www/html/web/app.php /var/www/html/web/index.php
 	su www-data -s /bin/bash -c "cd /var/www/html && make deploy"
+	rm ./app/config/notification.yml
